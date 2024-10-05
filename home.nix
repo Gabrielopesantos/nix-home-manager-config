@@ -4,6 +4,10 @@
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "gabriel";
+  # ??
+  targets.genericLinux.enable = true;
+  xdg.mime.enable = true;
+  # ??
   home.homeDirectory = "/home/gabriel";
   # This worked better (https://www.reddit.com/r/NixOS/comments/zyv0lu/comment/j6cxjbr)
   # https://github.com/nix-community/home-manager/issues/1439#issuecomment-1106208294
@@ -43,12 +47,14 @@
     glow
     hugo
 
+    brave
     zathura
     bitwarden-desktop
     protonmail-desktop
     protonvpn-gui
 
     nixfmt-classic
+    # pcsctools
 
     # system call monitoring
     ltrace # library call monitoring
@@ -63,7 +69,7 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -86,6 +92,11 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+  };
+
+  programs.go = {
+    enable = true;
+    # goPath = "Development/language/go";
   };
 
   programs.bottom.enable = true;
@@ -129,6 +140,19 @@
     };
 
     syntaxHighlighting = { enable = true; };
+  };
+
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      git = {
+        paging = {
+          colorArg = "always";
+          pager = "delta --color-only --dark --paging=never";
+          useConfig = false;
+        };
+      };
+    };
   };
 
   # NOTE: Might override existing installation
@@ -228,13 +252,12 @@
 
       # Style status bar
       set -g status-style fg=grey
-      set -g window-status-current-style fg=green,bg=black
       set -g pane-active-border-style fg=green
       set -g window-status-format " #I:#W#F "
+      set -g window-status-current-style fg=green
       set -g window-status-current-format " #I:#W#F "
-      set -g window-status-current-style bg=green,fg=black
       set -g window-status-activity-style bg=green,fg=yellow
-      set -g window-status-separator "|"
+      # set -g window-status-separator "|"
       set -g status-justify left
 
       # Automatically rename window to pane_current_path
@@ -242,6 +265,7 @@
       set-option -g automatic-rename on
       set-option -g automatic-rename-format '#{b:pane_current_path}'
     '';
+    shell = "${pkgs.zsh}/bin/zsh";
   };
 
   # Home Manager can also manage your environment variables through
@@ -262,14 +286,17 @@
   #
   home.sessionVariables = { EDITOR = "nvim"; };
 
-  # services.gpg-agent = {
-  #   enable = true;
-  #   pinentryPackage = pkgs.pinentry-tty;
-  #
-  #   # cache the keys forever so we don't get asked for a password
-  #   defaultCacheTtl = 31536000;
-  #   maxCacheTtl = 31536000;
-  # };
+  # services.pcscd.enable = true;
+  # services.scdaemon.enable = true;
+
+  services.gpg-agent = {
+    enable = true;
+    pinentryPackage = pkgs.pinentry-tty;
+
+    # cache the keys forever so we don't get asked for a password
+    defaultCacheTtl = 31536000;
+    maxCacheTtl = 31536000;
+  };
 
   # home.sessionPath = [
   #   "$HOME/.local/bin"
