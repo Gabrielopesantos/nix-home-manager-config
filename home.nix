@@ -6,7 +6,7 @@
   home.username = "gabriel";
   # ??
   targets.genericLinux.enable = true;
-  xdg.mime.enable = true;
+  # xdg.mime.enable = true;
   # ??
   home.homeDirectory = "/home/gabriel";
   # This worked better (https://www.reddit.com/r/NixOS/comments/zyv0lu/comment/j6cxjbr)
@@ -28,21 +28,26 @@
   home.packages = with pkgs; [
     neofetch
     nnn
-
+    cloc
+    vscode
+    valgrind
     fd
     jq
     ripgrep
     tree
-
+    golangci-lint
+    gnumake
     httpie
     awscli2
     gh
     kubectl
     k9s
     tldr
-
+    obsidian
     # Networking tools
     mtr
+    wireguard-tools
+    whois
 
     glow
     hugo
@@ -53,8 +58,11 @@
     protonmail-desktop
     protonvpn-gui
 
+    yubikey-manager
+    yubikey-manager-qt
+    yubikey-personalization
+
     nixfmt-classic
-    # pcsctools
 
     # system call monitoring
     ltrace # library call monitoring
@@ -69,7 +77,7 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    (pkgs.nerdfonts.override { fonts = [ "LiberationMono" ]; })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -157,7 +165,6 @@
 
   # NOTE: Might override existing installation
   # programs.gpg.enable = true;
-
   programs.git = {
     enable = true;
     userName = "Gabriel Santos";
@@ -284,7 +291,11 @@
   #
   #  /etc/profiles/per-user/gabriel/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = { EDITOR = "nvim"; };
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    KEYID = "67825262EAAF4EBE";
+    NIXPKGS_ALLOW_UNFREE = "1";
+  };
 
   # services.pcscd.enable = true;
   # services.scdaemon.enable = true;
