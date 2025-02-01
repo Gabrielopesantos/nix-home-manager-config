@@ -26,6 +26,7 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    sqlitebrowser
     neofetch
     nnn
     cloc
@@ -57,12 +58,17 @@
     bitwarden-desktop
     protonmail-desktop
     protonvpn-gui
+    httpie-desktop
 
     yubikey-manager
     yubikey-manager-qt
     yubikey-personalization
 
     nixfmt-classic
+    nixd
+
+    discord
+    helix
 
     # system call monitoring
     ltrace # library call monitoring
@@ -77,7 +83,7 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    (pkgs.nerdfonts.override { fonts = [ "LiberationMono" ]; })
+    # (pkgs.nerdfonts.override { fonts = [ "LiberationMono" ]; }) // NOTE: This doesn't work this anymore
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -121,7 +127,7 @@
 
   programs.eza = {
     enable = true;
-    icons = false;
+    # icons = false;
   };
 
   programs.neovim = { enable = true; };
@@ -179,6 +185,10 @@
       color.ui = true;
       commit.gpgsign = true;
     };
+  };
+
+  programs.fish = {
+    enable = true;
   };
 
   programs.tmux = {
@@ -295,6 +305,7 @@
     EDITOR = "nvim";
     KEYID = "67825262EAAF4EBE";
     NIXPKGS_ALLOW_UNFREE = "1";
+    BAO_ADDR="http://127.0.0.1:8200";
   };
 
   # services.pcscd.enable = true;
