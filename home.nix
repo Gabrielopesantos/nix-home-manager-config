@@ -197,6 +197,7 @@
       delta.dark  = true;
       delta.side-by-side = true;
       delta.line-numbers = true;
+      delta.syntax-theme = "base16-256";
       merge.conflictStyle = "zdiff3";
       # commit.gpgsign = true;
     };
