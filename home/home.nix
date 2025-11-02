@@ -1,28 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
-  home.username = "gabriel";
-  # ??
-  targets.genericLinux.enable = true;
-  # xdg.mime.enable = true;
-  # ??
-  home.homeDirectory = "/home/gabriel";
-  # This worked better (https://www.reddit.com/r/NixOS/comments/zyv0lu/comment/j6cxjbr)
-  # https://github.com/nix-community/home-manager/issues/1439#issuecomment-1106208294
-  # home.activation = {
-  #   linkDesktopApplications = {
-  #     after = [ "writeBoundary" "createXdgUserDirectories" ];
-  #     before = [ ];
-  #     data = ''
-  #       rm -rf ${config.xdg.dataHome}/"applications/home-manager"
-  #       mkdir -p ${config.xdg.dataHome}/"applications/home-manager"
-  #       cp -Lr ${config.home.homeDirectory}/.nix-profile/share/applications/* ${config.xdg.dataHome}/"applications/home-manager/"
-  #     '';
-  #   };
-  # };
-
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
@@ -207,12 +185,56 @@
   programs.fish = {
     enable = true;
 
+    plugins = [
+      {
+        name = "z";
+        src = pkgs.fetchFromGitHub {
+          owner = "jethrokuan";
+          repo = "z";
+          rev = "067e867debee59aee231e789fc4631f80fa5788e";
+          sha256 = "sha256-emmjTsqt8bdI5qpx1bAzhVACkg0MNB/uffaRjjeuFxU=";
+        };
+      }
+      {
+        name = "fish-completion-sync";
+        src = pkgs.fetchFromGitHub {
+          owner = "pfgray";
+          repo = "fish-completion-sync";
+          rev = "f75ed04e98b3b39af1d3ce6256ca5232305565d8";
+          sha256 = "sha256-wmtMUVi/NmbvJtrPbORPhAwXgnILvm4rjOtjl98GcWA=";
+        };
+      }
+      {
+        name = "plugin-git";
+        src = pkgs.fetchFromGitHub {
+          owner = "jhillyerd";
+          repo = "plugin-git";
+          rev = "d6950214b6b2392d3dbb2cb670f2a5f240090038";
+          sha256 = "sha256-0uEKw+7EXkf5u3p3hfthSfQO/2rr3wl35ela7P2vB0Q=";
+        };
+      }
+      {
+        name = "plugin-bang-bang";
+        src = pkgs.fetchFromGitHub {
+          owner = "oh-my-fish";
+          repo = "plugin-bang-bang";
+          rev = "ec991b80ba7d4dda7a962167b036efc5c2d79419";
+          sha256 = "sha256-oPPCtFN2DPuM//c48SXb4TrFRjJtccg0YPXcAo0Lxq0=";
+        };
+      }
+    ];
+
     shellAliases = {
       lg = "lazygit";
       vim = "nvim";
       k = "kubectl";
       cat = "bat";
     };
+
+    interactiveShellInit = ''
+      # Ctrl+X,E to edit command line in editor (like zsh)
+      bind \cx\ce edit_command_buffer
+    '';
   };
 
   programs.starship = {
@@ -378,15 +400,6 @@
     "$HOME/bin"
     "$HOME/.nix-profile/bin" # binaries for non-nixOS
   ];
-
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "25.05"; # Please read the comment before changing.
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
