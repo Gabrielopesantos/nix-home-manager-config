@@ -1,6 +1,6 @@
 .PHONY: update
 update:
-	home-manager switch --impure --flake .#gabriel
+	NIXPKGS_ALLOW_UNFREE=1 home-manager switch --impure --flake .#gabriel
 
 .PHONY: clean
 clean:

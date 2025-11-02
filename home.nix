@@ -73,7 +73,6 @@
     zig
     odin
     discord
-    helix
     asdf-vm
     vlc
 
@@ -140,7 +139,7 @@
   programs.neovim = { enable = true; };
 
   programs.zsh = {
-    enable = true;
+    enable = false;
     autosuggestion.enable = true;
     enableCompletion = true;
 
@@ -181,20 +180,22 @@
   # programs.gpg.enable = true;
   programs.git = {
     enable = true;
-    userName = "Gabriel Santos";
-    userEmail = "me@gabrielopesantos.com";
     # signing = {
     #   key = "67825262EAAF4EBE";
     #   signByDefault = true;
     # };
-    extraConfig = {
+    settings = {
+        user = {
+            name = "Gabriel Santos";
+                email = "me@gabrielopesantos.com";
+    };
       init.defaultBranch = "main";
       core.editor = "nvim";
       color.ui = true;
       core.pager = "delta";
       interactive.diffFilter = "delta --color-only";
-      delta.navigate  = true;
-      delta.dark  = true;
+      delta.navigate = true;
+      delta.dark = true;
       delta.side-by-side = true;
       delta.line-numbers = true;
       delta.syntax-theme = "base16-256";
@@ -203,7 +204,44 @@
     };
   };
 
-  programs.fish = { enable = true; };
+  programs.fish = {
+    enable = true;
+
+    shellAliases = {
+      lg = "lazygit";
+      vim = "nvim";
+      k = "kubectl";
+      cat = "bat";
+    };
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      scan_timeout = 5;
+
+      character = {
+        success_symbol = "λ";
+        error_symbol = "!";
+      };
+      format = "$character";
+      right_format = "$direnv$nix_shell$directory";
+
+      direnv = {
+        disabled = false;
+        format = "[$allowed]($style)";
+        style = "red";
+        allowed_msg = "";
+        not_allowed_msg = "? ";
+        denied_msg = " ";
+      };
+      nix_shell = {
+        format = "[$symbol]($style)";
+        symbol = " ";
+      };
+      directory.style = "purple";
+    };
+  };
 
   programs.tmux = {
     enable = true;
@@ -296,7 +334,7 @@
       set-option -g automatic-rename on
       set-option -g automatic-rename-format '#{b:pane_current_path}'
     '';
-    shell = "${pkgs.zsh}/bin/zsh";
+    shell = "${pkgs.fish}/bin/fish";
   };
 
   # Home Manager can also manage your environment variables through
@@ -338,7 +376,7 @@
     "$HOME/.asdf/shims"
     "$HOME/.local/bin"
     "$HOME/bin"
-    "$HOME/.nix-profile/bin" #binaries for non-nixOS
+    "$HOME/.nix-profile/bin" # binaries for non-nixOS
   ];
 
   # This value determines the Home Manager release that your configuration is
