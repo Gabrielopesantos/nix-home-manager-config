@@ -1,27 +1,18 @@
-{ config, pkgs, ... }:
-
-{
+{ config, pkgs, ... }: {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    htop
-    gcc
-    sqlitebrowser
     neofetch
-    tokei # Does the same as cloc, just giving trying it out
-    delta
-    vscode
+    tokei # Does the same as cloc, just giving trying it ougcc
     valgrind
     fd
     jq
     ripgrep
     bat
     tree
-    golangci-lint
     gnumake
-    httpie
     awscli2
-    gh
+    httpie
     kubectl
     k9s
     tldr
@@ -50,9 +41,11 @@
 
     zig
     odin
+
     discord
-    asdf-vm
+    audacious
     vlc
+    asdf-vm
 
     # system call monitoring
     ltrace # library call monitoring
@@ -92,17 +85,7 @@
     # '';
   };
 
-  programs.go = {
-    enable = true;
-    # goPath = "Development/language/go";
-  };
-
   programs.bottom.enable = true;
-  programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-  };
-
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
@@ -151,34 +134,6 @@
           useConfig = false;
         };
       };
-    };
-  };
-
-  # NOTE: Might override existing installation
-  # programs.gpg.enable = true;
-  programs.git = {
-    enable = true;
-    # signing = {
-    #   key = "67825262EAAF4EBE";
-    #   signByDefault = true;
-    # };
-    settings = {
-        user = {
-            name = "Gabriel Santos";
-                email = "me@gabrielopesantos.com";
-    };
-      init.defaultBranch = "main";
-      core.editor = "nvim";
-      color.ui = true;
-      core.pager = "delta";
-      interactive.diffFilter = "delta --color-only";
-      delta.navigate = true;
-      delta.dark = true;
-      delta.side-by-side = true;
-      delta.line-numbers = true;
-      delta.syntax-theme = "base16-256";
-      merge.conflictStyle = "zdiff3";
-      # commit.gpgsign = true;
     };
   };
 
@@ -240,7 +195,7 @@
   programs.starship = {
     enable = true;
     settings = {
-      scan_timeout = 5;
+      scan_timeout = 10; # Increase timeout
 
       character = {
         success_symbol = "λ";
@@ -249,114 +204,30 @@
       format = "$character";
       right_format = "$direnv$nix_shell$directory";
 
+      # Optimize directory module
+      directory = {
+        style = "purple";
+        truncation_length = 3; # Limit directory depth
+        truncate_to_repo = true; # Stop at git repo root
+        read_only = " 🔒";
+      };
+
+      # Optimize direnv
       direnv = {
         disabled = false;
         format = "[$allowed]($style)";
         style = "red";
         allowed_msg = "";
         not_allowed_msg = "? ";
-        denied_msg = " ";
+        denied_msg = " ";
       };
+
+      # Optimize nix_shell
       nix_shell = {
         format = "[$symbol]($style)";
-        symbol = " ";
+        symbol = " ";
       };
-      directory.style = "purple";
     };
-  };
-
-  programs.tmux = {
-    enable = true;
-    terminal = "xterm-256color";
-    # shortcut = "a";  # Binds `C-a` to last-window
-    # secureSocket = false;
-    # NOTE: Review
-    extraConfig = ''
-      unbind C-b
-      set-option -g prefix C-a
-      bind-key C-a send-prefix
-
-      bind r source-file ~/.tmux.conf
-      # start window numbers at 1 to match keyboard order with tmux window order
-      set -g base-index 1
-
-      # start pane indexing at 1 for tmuxinator
-      set-window-option -g pane-base-index 1
-
-      # renumber windows sequentially after closing any of them
-      set -g renumber-windows on
-
-      # Faster escape sequences (default is 500ms).
-      # This helps when exiting insert mode in Vim: http://superuser.com/a/252717/65504
-      set -s escape-time 50
-
-      # Set mouse on
-      set -g mouse on
-
-      # Neovim says it needs this
-      set-option -g focus-events on
-
-      # Use vim keybindings in copy mode
-      setw -g mode-keys vi
-      # Setup 'v' to begin selection
-      bind-key -T copy-mode-vi v send -X begin-selection
-      # Setup 'y' to copy selection
-      bind-key -T copy-mode-vi y send -X copy-selection-and-cancel
-      # Setup 'P' to paste selection
-      bind P paste-buffer
-
-      # Rebind spit and new-window commands to use current path
-      bind '"' split-window -c "#{pane_current_path}"
-      bind % split-window -h -c "#{pane_current_path}"
-      bind c new-window -c "#{pane_current_path}"
-
-      set-window-option -g mode-keys vi # What does this do?
-      #bind -T copy-mode-vi v send-keys -X begin-selection
-
-      # vim-like pane switching
-      bind -r ^ last-window
-      bind -r k select-pane -U
-      bind -r j select-pane -D
-      bind -r h select-pane -L
-      bind -r l select-pane -R
-
-      # Bind C-s to fuzzy switch session
-      #bind -n C-s \
-        #split-window -l 10 'session=$(tmux list-sessions -F "#{session_name}" | fzf --query="$2" --select-1 --exit-0) && tmux switch-client -t "$session"' \;
-
-      # Mousemode
-      # Toggle mouse on
-      bind m set -g mouse on \; display 'Mouse Mode: ON'
-
-      # Toggle mouse off
-      bind M set -g mouse off \; display 'Mouse Mode: OFF'
-
-      # Reload tmux config
-      bind-key r source-file ~/.tmux.conf \; display-message "~/.tmux.conf reloaded"
-      # Edit tmux conf
-      #bind-key M split-window -h "vim ~/.tmux.conf"
-
-      # Open a "test" split-window at the bottom
-      bind t split-window -f -l 15 -c "#{pane_current_path}"
-      # Open a "test" split-window at the right
-      bind T split-window -h -f -p 35 -c "#{pane_current_path}"
-
-      # Style status bar
-      set -g status-style fg=grey
-      set -g pane-active-border-style fg=green
-      set -g window-status-format " #I:#W#F "
-      set -g window-status-current-style fg=green
-      set -g window-status-current-format " #I:#W#F "
-      set -g window-status-activity-style bg=green,fg=yellow
-      # set -g window-status-separator "|"
-      set -g status-justify left
-
-      # Automatically rename window to pane_current_path
-      set-option -g status-interval 5
-      set-option -g automatic-rename on
-      set-option -g automatic-rename-format '#{b:pane_current_path}'
-    '';
-    shell = "${pkgs.fish}/bin/fish";
   };
 
   # Home Manager can also manage your environment variables through
@@ -385,15 +256,6 @@
   # services.pcscd.enable = true;
   # services.scdaemon.enable = true;
 
-  services.gpg-agent = {
-    enable = true;
-    pinentryPackage = pkgs.pinentry-tty;
-
-    # cache the keys forever so we don't get asked for a password
-    defaultCacheTtl = 31536000;
-    maxCacheTtl = 31536000;
-  };
-
   home.sessionPath = [
     "$HOME/.asdf/shims"
     "$HOME/.local/bin"
@@ -403,4 +265,5 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  programs.htop.enable = true;
 }

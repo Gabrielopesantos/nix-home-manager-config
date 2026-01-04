@@ -1,4 +1,6 @@
-Nix home-manager dotfiles
+# Nix home-manager configuration
+
+[home-manager](https://github.com/nix-community/home-manager) to manage my home directory.
 
 ### Known issues
 

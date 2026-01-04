@@ -1,12 +1,10 @@
 {
-  programs.home-manager.enable = true;
-
   home = rec {
     stateVersion = "25.05";
     username = "gabriel";
     homeDirectory = "/home/${username}";
   };
 
-  targets.genericLinux.enable = true;
-  xdg.mime.enable = true;
+  # Always restart/start/stop systemd services on home manager switch.
+  systemd.user.startServices = "sd-switch";
 }

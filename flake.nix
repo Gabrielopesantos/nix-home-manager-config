@@ -2,21 +2,21 @@
   description = "My Home Manager configuration";
 
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # NOTE: This will require your git SSH access to the repo.
-    # ghostty.url = "git+ssh://git@github.com/ghostty-org/ghostty";
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { self, nixpkgs, home-manager, flake-utils }:
     let
       system = "x86_64-linux";
-      # pkgs = nixpkgs.legacyPackages.${system};
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs {
+        inherit system;
+        config = { allowUnfree = true; };
+      };
     in {
       homeConfigurations = {
         "gabriel" = home-manager.lib.homeManagerConfiguration {
@@ -30,5 +30,17 @@
           # to pass through arguments to home.nix
         };
       };
-    };
+    } // (flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = import nixpkgs { system = system; };
+      in {
+        devShells.default = pkgs.mkShell {
+          packages = with pkgs; [
+            black
+            cargo
+            git-crypt
+            nixfmt-classic
+            pre-commit
+          ];
+        };
+      }));
 }
