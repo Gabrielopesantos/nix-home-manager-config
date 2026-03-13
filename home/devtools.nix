@@ -6,7 +6,25 @@ with lib; {
     };
   };
 
-  config = mkIf config.devTools.enable {
+  config = mkIf config.devTools.enable (let
+    ccusage = pkgs.stdenvNoCC.mkDerivation rec {
+      pname = "ccusage";
+      version = "18.0.10";
+      src = pkgs.fetchurl {
+        url = "https://registry.npmjs.org/${pname}/-/${pname}-${version}.tgz";
+        hash = "sha256-YMJ8K2LmS0v0HeoRskfULZ7P7rVBpgYJRlDmZjndRiw=";
+      };
+      nativeBuildInputs = [ pkgs.makeWrapper ];
+      unpackPhase = "tar xf $src";
+      sourceRoot = "package";
+      installPhase = ''
+        mkdir -p $out/lib/ccusage $out/bin
+        cp -r . $out/lib/ccusage
+        makeWrapper ${pkgs.nodejs}/bin/node $out/bin/ccusage \
+          --add-flags "$out/lib/ccusage/dist/index.js"
+      '';
+    };
+  in {
     home.packages = with pkgs; [
       # Go
       golangci-lint
@@ -33,7 +51,7 @@ with lib; {
       icon-library
 
       # Claude Code Usage Analysis
-      # ccusage
+      ccusage
     ];
 
     # Go
@@ -94,5 +112,5 @@ with lib; {
     programs.direnv.nix-direnv.enable = true;
     programs.jq.enable = true;
     programs.vscode.enable = true;
-  };
+  });
 }
