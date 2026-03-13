@@ -2,13 +2,15 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
-    neofetch
+    fastfetch
     tokei # Does the same as cloc, just giving trying it ougcc
     valgrind
     fd
+    rclone
     jq
     ripgrep
     bat
+    sd
     tree
     gnumake
     awscli2
@@ -35,8 +37,9 @@
     yubikey-manager
     yubioath-flutter
     yubikey-personalization
+    bitwarden-cli
 
-    nixfmt-classic
+    nixfmt
     nixd
 
     zig
@@ -44,8 +47,11 @@
 
     discord
     audacious
+    audacity
     vlc
     asdf-vm
+
+    # anki
 
     # system call monitoring
     ltrace # library call monitoring
@@ -137,6 +143,10 @@
     };
   };
 
+  programs.nushell = {
+    enable = true;
+  };
+
   programs.fish = {
     enable = true;
 
@@ -197,36 +207,36 @@
     settings = {
       scan_timeout = 10; # Increase timeout
 
-      character = {
-        success_symbol = "λ";
-        error_symbol = "!";
-      };
-      format = "$character";
-      right_format = "$direnv$nix_shell$directory";
-
-      # Optimize directory module
-      directory = {
-        style = "purple";
-        truncation_length = 3; # Limit directory depth
-        truncate_to_repo = true; # Stop at git repo root
-        read_only = " 🔒";
-      };
-
-      # Optimize direnv
-      direnv = {
-        disabled = false;
-        format = "[$allowed]($style)";
-        style = "red";
-        allowed_msg = "";
-        not_allowed_msg = "? ";
-        denied_msg = " ";
-      };
-
-      # Optimize nix_shell
-      nix_shell = {
-        format = "[$symbol]($style)";
-        symbol = " ";
-      };
+      # character = {
+      #   success_symbol = "λ";
+      #   error_symbol = "!";
+      # };
+      # format = "$character";
+      # right_format = "$direnv$nix_shell$directory";
+      #
+      # # Optimize directory module
+      # directory = {
+      #   style = "purple";
+      #   truncation_length = 3; # Limit directory depth
+      #   truncate_to_repo = true; # Stop at git repo root
+      #   read_only = " 🔒";
+      # };
+      #
+      # # Optimize direnv
+      # direnv = {
+      #   disabled = false;
+      #   format = "[$allowed]($style)";
+      #   style = "red";
+      #   allowed_msg = "";
+      #   not_allowed_msg = "? ";
+      #   denied_msg = " ";
+      # };
+      #
+      # # Optimize nix_shell
+      # nix_shell = {
+      #   format = "[$symbol]($style)";
+      #   symbol = " ";
+      # };
     };
   };
 
