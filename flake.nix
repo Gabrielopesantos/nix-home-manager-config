@@ -38,7 +38,7 @@
             black
             cargo
             git-crypt
-            nixfmt-classic
+            nixfmt
             pre-commit
           ];
         };
