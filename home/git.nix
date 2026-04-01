@@ -11,6 +11,30 @@
       format = "openpgp";
     };
 
+    ignores = [
+      # OS
+      ".DS_Store"
+      "Thumbs.db"
+
+      # Editors
+      ".idea/"
+      ".vscode/"
+      "*.swp"
+      "*.swo"
+      "*~"
+
+      # Nix / direnv
+      ".direnv/"
+      ".envrc"
+
+      # Secrets / env
+      ".env"
+      ".env.local"
+
+      # Claude
+      "**/.claude/settings.local.json"
+    ];
+
     settings = {
       user = {
         name = "Gabriel Santos";
