@@ -29,6 +29,10 @@ with lib; {
       # Go
       golangci-lint
 
+      # Rust
+      cargo
+      rustc
+
       # Shell Utilities
       eternal-terminal
       mosh
