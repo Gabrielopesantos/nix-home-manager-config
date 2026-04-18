@@ -31,7 +31,7 @@
     zathura
     bitwarden-desktop
     protonmail-desktop
-    protonvpn-gui
+    proton-vpn
     httpie-desktop
 
     yubikey-manager
