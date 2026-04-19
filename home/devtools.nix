@@ -66,49 +66,22 @@ with lib; {
     };
 
     # Claude
-    programs.claude-code = {
-      enable = true;
-      agents = {
-        code-reviewer = ''
-          ---
-          name: code-reviewer
-          description: Specialized code review agent
-          tools: Read, Edit, Grep
-          ---
+    programs.claude-code.enable = true;
 
-          You are a senior software engineer specializing in code reviews.
-          Focus on code quality, security, and maintainability.
-        '';
-      };
-      settings = {
-        permissions.defaultMode = "acceptEdits";
-        alwaysThinkingEnabled = true;
-      };
-      rules = {
-        conventional-commits = ''
-          When writing git commit messages, always follow the Conventional Commits specification:
-          - Format: <type>[optional scope]: <description>
-          - Types: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
-          - Example: feat(auth): add OAuth2 login support
-          - Breaking changes: append `!` after the type or add `BREAKING CHANGE:` in the footer
-          - Keep the subject line under 72 characters
-          - Use imperative mood in the description ("add" not "added")
-        '';
-        rust-cli-tools = ''
-          When using CLI tools, prefer Rust implementations over GNU/POSIX defaults:
-          - `ls` -> `eza`
-          - `cat` -> `bat`
-          - `find` -> `fd`
-          - `grep` -> `ripgrep` (`rg`)
-          - `sed` / `awk` -> `sd`
-          - `du` -> `dust`
-          - `ps` -> `procs`
-          - `top` / `htop` -> `btm` (bottom)
-          - `curl` (for simple fetches) -> `xh`
-          - `cut` -> `choose`
-          Only fall back to GNU tools if the Rust alternative is not available or lacks a required feature.
-        '';
-      };
+    # Use mkOutOfStoreSymlink so Claude Code can write to settings.json at runtime.
+    # The Nix store is read-only, so a normal home.file symlink would cause EACCES.
+    home.file.".claude/settings.json" = {
+      source = config.lib.file.mkOutOfStoreSymlink
+        "${config.home.homeDirectory}/.config/home-manager/claude/settings.json";
+    };
+
+    home.file.".claude/statusline-command.sh".source =
+      config.lib.file.mkOutOfStoreSymlink
+        "${config.home.homeDirectory}/.config/home-manager/claude/statusline-command.sh";
+
+    home.file.".claude/rules/conventional-commits.md" = {
+      source = config.lib.file.mkOutOfStoreSymlink
+        "${config.home.homeDirectory}/.config/home-manager/claude/rules/conventional-commits.md";
     };
 
     # Enable developer programs

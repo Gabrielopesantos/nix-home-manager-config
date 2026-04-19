@@ -39,6 +39,8 @@
     yubikey-personalization
     bitwarden-cli
 
+    neovim
+
     nixfmt
     nixd
 
@@ -89,6 +91,7 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
   };
 
   programs.bottom.enable = true;
@@ -103,7 +106,6 @@
     # icons = false;
   };
 
-  programs.neovim = { enable = true; };
 
   programs.zsh = {
     enable = false;
