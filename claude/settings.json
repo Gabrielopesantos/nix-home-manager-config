@@ -20,5 +20,8 @@
     }
   },
   "alwaysThinkingEnabled": true,
-  "mcpServers": {}
+  "effortLevel": "high",
+  "theme": "dark-ansi",
+  "mcpServers": {},
+  "model": "opus"
 }
