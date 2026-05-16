@@ -22,6 +22,5 @@
   "alwaysThinkingEnabled": true,
   "effortLevel": "high",
   "theme": "dark-ansi",
-  "mcpServers": {},
-  "model": "opus"
+  "mcpServers": {}
 }

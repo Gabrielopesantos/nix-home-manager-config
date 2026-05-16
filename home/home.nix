@@ -134,15 +134,15 @@
 
   programs.lazygit = {
     enable = true;
-    settings = {
-      git = {
-        paging = {
-          colorArg = "always";
-          pager = "delta --color-only --dark --paging=never";
-          useConfig = false;
-        };
-      };
-    };
+    # settings = {
+    #   git = {
+    #     paging = {
+    #       colorArg = "always";
+    #       pager = "delta --color-only --dark --paging=never";
+    #       useConfig = false;
+    #     };
+    #   };
+    # };
   };
 
   programs.nushell = {
