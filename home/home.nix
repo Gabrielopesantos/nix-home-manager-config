@@ -29,6 +29,12 @@
 
     brave
     zathura
+    # Trying out other readers
+    kdePackages.okular
+    xournalpp
+    sioyek
+    # Trying out other readers
+    gromit-mpx
     bitwarden-desktop
     protonmail-desktop
     proton-vpn
