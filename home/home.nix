@@ -140,15 +140,9 @@
     enable = true;
 
     plugins = [
-      {
-        name = "z";
-        src = pkgs.fetchFromGitHub {
-          owner = "jethrokuan";
-          repo = "z";
-          rev = "067e867debee59aee231e789fc4631f80fa5788e";
-          sha256 = "sha256-emmjTsqt8bdI5qpx1bAzhVACkg0MNB/uffaRjjeuFxU=";
-        };
-      }
+      { name = "z";          src = pkgs.fishPlugins.z.src; }
+      { name = "plugin-git"; src = pkgs.fishPlugins.plugin-git.src; }
+      { name = "bang-bang";  src = pkgs.fishPlugins.bang-bang.src; }
       {
         name = "fish-completion-sync";
         src = pkgs.fetchFromGitHub {
@@ -156,24 +150,6 @@
           repo = "fish-completion-sync";
           rev = "f75ed04e98b3b39af1d3ce6256ca5232305565d8";
           sha256 = "sha256-wmtMUVi/NmbvJtrPbORPhAwXgnILvm4rjOtjl98GcWA=";
-        };
-      }
-      {
-        name = "plugin-git";
-        src = pkgs.fetchFromGitHub {
-          owner = "jhillyerd";
-          repo = "plugin-git";
-          rev = "d6950214b6b2392d3dbb2cb670f2a5f240090038";
-          sha256 = "sha256-0uEKw+7EXkf5u3p3hfthSfQO/2rr3wl35ela7P2vB0Q=";
-        };
-      }
-      {
-        name = "plugin-bang-bang";
-        src = pkgs.fetchFromGitHub {
-          owner = "oh-my-fish";
-          repo = "plugin-bang-bang";
-          rev = "ec991b80ba7d4dda7a962167b036efc5c2d79419";
-          sha256 = "sha256-oPPCtFN2DPuM//c48SXb4TrFRjJtccg0YPXcAo0Lxq0=";
         };
       }
     ];

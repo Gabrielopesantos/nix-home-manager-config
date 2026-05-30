@@ -16,16 +16,6 @@
       pkgs = import nixpkgs {
         inherit system;
         config = { allowUnfree = true; };
-        overlays = [
-          (final: prev: {
-            wireshark = prev.wireshark.overrideAttrs (old: {
-              src = final.fetchzip {
-                url = "https://gitlab.com/api/v4/projects/wireshark%2Fwireshark/repository/archive.tar.gz?sha=refs%2Ftags%2Fv4.6.5";
-                hash = "sha256-Zvrwxjp4LK2J3QnxmPxKKrU01YHQvPyp54UWzeGNCjA=";
-              };
-            });
-          })
-        ];
       };
     in {
       homeConfigurations = {

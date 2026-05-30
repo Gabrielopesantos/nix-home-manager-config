@@ -9,10 +9,10 @@ with lib; {
   config = mkIf config.devTools.enable (let
     ccusage = pkgs.stdenvNoCC.mkDerivation rec {
       pname = "ccusage";
-      version = "18.0.10";
+      version = "20.0.6";
       src = pkgs.fetchurl {
         url = "https://registry.npmjs.org/${pname}/-/${pname}-${version}.tgz";
-        hash = "sha256-YMJ8K2LmS0v0HeoRskfULZ7P7rVBpgYJRlDmZjndRiw=";
+        hash = "sha256-hXKQF7jUVz71/BKn++V7S+OC9uCuc0+6TYYZ5MKjGcM=";
       };
       nativeBuildInputs = [ pkgs.makeWrapper ];
       unpackPhase = "tar xf $src";
