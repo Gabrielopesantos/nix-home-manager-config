@@ -7,5 +7,6 @@
     ./git.nix
     ./tmux.nix
     ./devtools.nix
+    ./gui.nix
   ];
 }

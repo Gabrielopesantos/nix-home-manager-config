@@ -18,7 +18,6 @@
     kubectl
     k9s
     tldr
-    obsidian
     # Networking tools
     mtr
     wireguard-tools
@@ -27,23 +26,9 @@
     glow
     hugo
 
-    brave
-    zathura
-    # Trying out other readers
-    kdePackages.okular
-    xournalpp
-    sioyek
-    # Trying out other readers
-    gromit-mpx
-    bitwarden-desktop
-    protonmail-desktop
-    proton-vpn
-    httpie-desktop
-
-    yubikey-manager
-    yubioath-flutter
-    yubikey-personalization
     bitwarden-cli
+    yubikey-manager
+    yubikey-personalization
 
     neovim
 
@@ -53,10 +38,6 @@
     zig
     odin
 
-    discord
-    audacious
-    audacity
-    vlc
     asdf-vm
 
     # anki

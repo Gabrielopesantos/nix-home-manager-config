@@ -47,13 +47,6 @@ with lib; {
       # Better Python REPL
       python3Packages.ptpython
 
-      # GUI Tools
-      sqlitebrowser
-      wireshark
-
-      # GTK Development
-      icon-library
-
       # Claude Code Usage Analysis
       ccusage
     ];
@@ -88,6 +81,5 @@ with lib; {
     programs.direnv.enable = true;
     programs.direnv.nix-direnv.enable = true;
     programs.jq.enable = true;
-    programs.vscode.enable = true;
   });
 }
