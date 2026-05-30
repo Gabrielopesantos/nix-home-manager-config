@@ -1,6 +1,8 @@
 { pkgs, ... }:
-let agentTTL = 60 * 60 * 8; # 8 hours in seconds
-in {
+let
+  agentTTL = 60 * 60 * 8; # 8 hours in seconds
+in
+{
   programs.gpg.enable = true;
 
   # M ake the gpg-agent work

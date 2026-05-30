@@ -1,6 +1,14 @@
-{ config, lib, pkgs, ... }:
-with lib; {
-  options.gui.enable = mkEnableOption "GUI applications" // { default = true; };
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+with lib;
+{
+  options.gui.enable = mkEnableOption "GUI applications" // {
+    default = true;
+  };
 
   config = mkIf config.gui.enable {
     home.packages = with pkgs; [

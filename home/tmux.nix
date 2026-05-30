@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
-let configFilePath = "${config.xdg.configHome}/tmux/tmux.conf";
-in {
+let
+  configFilePath = "${config.xdg.configHome}/tmux/tmux.conf";
+in
+{
   programs.tmux = {
     enable = true;
     # Binds `C-a` to last-window

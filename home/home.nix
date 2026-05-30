@@ -1,4 +1,5 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }:
+{
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
@@ -93,7 +94,6 @@
     # icons = false;
   };
 
-
   programs.zsh = {
     enable = false;
     autosuggestion.enable = true;
@@ -105,7 +105,10 @@
 
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "z" ];
+      plugins = [
+        "git"
+        "z"
+      ];
       theme = "gallois";
     };
 
@@ -116,7 +119,9 @@
       cat = "bat";
     };
 
-    syntaxHighlighting = { enable = true; };
+    syntaxHighlighting = {
+      enable = true;
+    };
   };
 
   programs.lazygit = {
@@ -140,9 +145,18 @@
     enable = true;
 
     plugins = [
-      { name = "z";          src = pkgs.fishPlugins.z.src; }
-      { name = "plugin-git"; src = pkgs.fishPlugins.plugin-git.src; }
-      { name = "bang-bang";  src = pkgs.fishPlugins.bang-bang.src; }
+      {
+        name = "z";
+        src = pkgs.fishPlugins.z.src;
+      }
+      {
+        name = "plugin-git";
+        src = pkgs.fishPlugins.plugin-git.src;
+      }
+      {
+        name = "bang-bang";
+        src = pkgs.fishPlugins.bang-bang.src;
+      }
       {
         name = "fish-completion-sync";
         src = pkgs.fetchFromGitHub {
