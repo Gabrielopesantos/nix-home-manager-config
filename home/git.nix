@@ -57,85 +57,85 @@
       delta.syntax-theme = "base16-256";
       merge.conflictStyle = "zdiff3";
       # commit.gpgsign = true;
+
+      alias = {
+        # status / diff
+        st = "status";
+        s = "status --short --branch";
+        d = "diff";
+        dc = "diff --cached";
+        dw = "diff --word-diff";
+
+        # staging
+        a = "add";
+        aa = "add --all";
+        ap = "add --patch";
+        au = "add --update";
+
+        # commit
+        c = "commit --verbose";
+        cm = "commit --message";
+        ca = "commit --all --verbose";
+        cam = "commit --all --message";
+        cne = "commit --amend --no-edit";
+
+        # checkout / switch
+        co = "checkout";
+        cb = "checkout -b";
+        sw = "switch";
+        swc = "switch --create";
+
+        # branch
+        br = "branch";
+        bra = "branch --all";
+        brd = "branch --delete";
+
+        # log
+        lo = "log --oneline --decorate";
+        lol = "log --oneline --graph --decorate";
+        loa = "log --oneline --graph --decorate --all";
+        ls = "log --stat";
+
+        # fetch / pull / push
+        f = "fetch";
+        fa = "fetch --all --prune";
+        pl = "pull";
+        p = "push";
+        pf = "push --force-with-lease";
+
+        # rebase
+        rb = "rebase";
+        rbi = "rebase --interactive";
+        rbc = "rebase --continue";
+        rba = "rebase --abort";
+        rbs = "rebase --skip";
+
+        # reset / restore
+        undo = "reset HEAD~1 --mixed";
+        unstage = "restore --staged";
+        rh = "reset --hard";
+
+        # stash
+        sta = "stash push";
+        stp = "stash pop";
+        stl = "stash list";
+        stu = "stash push --include-untracked";
+
+        # cherry-pick
+        cp = "cherry-pick";
+        cpa = "cherry-pick --abort";
+        cpc = "cherry-pick --continue";
+
+        # misc
+        m = "merge";
+        ma = "merge --abort";
+        cl = "clone --recurse-submodules";
+      };
     };
   };
 
   programs.delta = {
     enable = true;
     enableGitIntegration = true;
-  };
-
-  programs.git.aliases = {
-    # status / diff
-    st = "status";
-    s = "status --short --branch";
-    d = "diff";
-    dc = "diff --cached";
-    dw = "diff --word-diff";
-
-    # staging
-    a = "add";
-    aa = "add --all";
-    ap = "add --patch";
-    au = "add --update";
-
-    # commit
-    c = "commit --verbose";
-    cm = "commit --message";
-    ca = "commit --all --verbose";
-    cam = "commit --all --message";
-    cne = "commit --amend --no-edit";
-
-    # checkout / switch
-    co = "checkout";
-    cb = "checkout -b";
-    sw = "switch";
-    swc = "switch --create";
-
-    # branch
-    br = "branch";
-    bra = "branch --all";
-    brd = "branch --delete";
-
-    # log
-    lo = "log --oneline --decorate";
-    lol = "log --oneline --graph --decorate";
-    loa = "log --oneline --graph --decorate --all";
-    ls = "log --stat";
-
-    # fetch / pull / push
-    f = "fetch";
-    fa = "fetch --all --prune";
-    pl = "pull";
-    p = "push";
-    pf = "push --force-with-lease";
-
-    # rebase
-    rb = "rebase";
-    rbi = "rebase --interactive";
-    rbc = "rebase --continue";
-    rba = "rebase --abort";
-    rbs = "rebase --skip";
-
-    # reset / restore
-    undo = "reset HEAD~1 --mixed";
-    unstage = "restore --staged";
-    rh = "reset --hard";
-
-    # stash
-    sta = "stash push";
-    stp = "stash pop";
-    stl = "stash list";
-    stu = "stash push --include-untracked";
-
-    # cherry-pick
-    cp = "cherry-pick";
-    cpa = "cherry-pick --abort";
-    cpc = "cherry-pick --continue";
-
-    # misc
-    m = "merge";
-    ma = "merge --abort";
-    cl = "clone --recurse-submodules";
   };
 }

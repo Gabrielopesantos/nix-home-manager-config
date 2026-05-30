@@ -39,8 +39,6 @@
     zig
     odin
 
-    asdf-vm
-
     # anki
 
     # system call monitoring
@@ -246,7 +244,6 @@
   # services.scdaemon.enable = true;
 
   home.sessionPath = [
-    "$HOME/.asdf/shims"
     "$HOME/.local/bin"
     "$HOME/bin"
     "$HOME/.nix-profile/bin" # binaries for non-nixOS
@@ -255,4 +252,14 @@
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
   programs.htop.enable = true;
+  programs.mise = {
+    enable = true;
+    globalConfig = {
+      tools = {
+        node = "lts";
+        bun = "latest";
+        go = "latest";
+      };
+    };
+  };
 }
