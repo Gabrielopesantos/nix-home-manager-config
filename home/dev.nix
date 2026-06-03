@@ -43,6 +43,17 @@ with lib;
     in
     {
       home.packages = with pkgs; [
+        # Editors
+        neovim
+
+        # Nix
+        nixd
+        nixfmt
+
+        # Languages
+        odin
+        zig
+
         # Go
         golangci-lint
 
@@ -50,25 +61,31 @@ with lib;
         cargo
         rustc
 
-        # Shell Utilities
-        eternal-terminal
-        mosh
+        # Python
+        python3Packages.ptpython
+
+        # Databases
+        litecli
+        pgcli
+        postgresql
+
+        # Utilities
+        ccusage
         tree-sitter
         watchexec
 
-        # SQL Terminal GUI
-        postgresql
-        litecli
-        pgcli
+        # Debugging
+        ltrace
+        valgrind
 
-        # Better Python REPL
-        python3Packages.ptpython
-
-        # Claude Code Usage Analysis
-        ccusage
+        # Docs / static sites
+        hugo
       ];
 
-      # Claude
+      home.sessionVariables = {
+        EDITOR = "nvim";
+      };
+
       programs.claude-code.enable = true;
 
       # Use mkOutOfStoreSymlink so Claude Code can write to settings.json at runtime.
@@ -83,11 +100,6 @@ with lib;
       home.file.".claude/rules/conventional-commits.md" = {
         source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/claude/rules/conventional-commits.md";
       };
-
-      # Enable developer programs
-      programs.direnv.enable = true;
-      programs.direnv.nix-direnv.enable = true;
-      programs.jq.enable = true;
     }
   );
 }

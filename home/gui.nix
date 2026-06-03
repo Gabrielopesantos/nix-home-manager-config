@@ -16,9 +16,7 @@ with lib;
       zathura
       kdePackages.okular
       xournalpp
-      sioyek
       gromit-mpx
-      bitwarden-desktop
       protonmail-desktop
       proton-vpn
       httpie-desktop

@@ -2,12 +2,13 @@
 {
   imports = [
     ./core.nix
-    ./home.nix
-    ./fzf.nix
-    ./gpg.nix
+    ./shell.nix
+    ./cli.nix
+    ./dev.nix
+    ./ops.nix
+    ./security.nix
     ./git.nix
     ./tmux.nix
-    ./devtools.nix
     ./gui.nix
   ];
 }
