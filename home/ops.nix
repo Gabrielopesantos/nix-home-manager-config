@@ -7,6 +7,7 @@
     kubectl
     mosh
     mtr
+    qemu
     whois
     wireguard-tools
   ];

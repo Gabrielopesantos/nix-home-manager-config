@@ -11,6 +11,7 @@
     rclone
     ripgrep
     sd
+    pass
     tldr
     tokei
     tree
