@@ -29,8 +29,24 @@ with lib;
       sqlitebrowser
       wireshark
       icon-library
+      signal-desktop
+      zed-editor
     ];
 
     programs.vscode.enable = true;
+
+    programs.ghostty = {
+      enable = true;
+      settings = {
+        font-family = "JetBrainsMono Nerd Font";
+        font-size = 12;
+
+        background-opacity = 0.95;
+        background-blur-radius = 20;
+
+        mouse-hide-while-typing = true;
+        command = "bash -l -c nu";
+      };
+    };
   };
 }

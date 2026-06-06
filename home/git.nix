@@ -4,6 +4,7 @@
     gh
     git-get
   ];
+
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
@@ -11,7 +12,7 @@
 
     signing = {
       key = "67825262EAAF4EBE";
-      signByDefault = false;
+      signByDefault = true;
       format = "openpgp";
     };
 
@@ -27,9 +28,8 @@
       "*.swo"
       "*~"
 
-      # Nix / direnv
+      # Nix
       ".direnv/"
-      ".envrc"
 
       # Secrets / env
       ".env"

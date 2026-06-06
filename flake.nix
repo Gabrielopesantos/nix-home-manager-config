@@ -10,14 +10,23 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      flake-utils,
+    }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        config = { allowUnfree = true; };
+        config = {
+          allowUnfree = true;
+        };
       };
-    in {
+    in
+    {
       homeConfigurations = {
         "gabriel" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
@@ -30,9 +39,13 @@
           # to pass through arguments to home.nix
         };
       };
-    } // (flake-utils.lib.eachDefaultSystem (system:
-      let pkgs = import nixpkgs { system = system; };
-      in {
+    }
+    // (flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs { system = system; };
+      in
+      {
         devShells.default = pkgs.mkShell {
           packages = with pkgs; [
             black
@@ -42,5 +55,6 @@
             pre-commit
           ];
         };
-      }));
+      }
+    ));
 }

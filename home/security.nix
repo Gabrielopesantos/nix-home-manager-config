@@ -7,18 +7,27 @@ in
     bitwarden-cli
     yubikey-manager
     yubikey-personalization
+    pinentry-qt
   ];
 
   home.sessionVariables = {
     KEYID = "67825262EAAF4EBE";
   };
 
-  programs.gpg.enable = true;
+  programs.gpg = {
+    enable = true;
+    publicKeys = [
+      {
+        source = ../keys/gabriel-pub.asc;
+        trust = "ultimate"; # your own key -> ultimate, so encrypt-to-self is promptless
+      }
+    ];
+  };
 
   services.gpg-agent = {
     enable = true;
-    enableSshSupport = true;
-    pinentry.package = pkgs.pinentry-tty;
+    enableSshSupport = true; # THIS is what makes the A subkey act as your SSH agent
+    pinentry.package = pkgs.pinentry-qt; # Qt fits your Plasma session; -curses for TTY-only (-tty)
     verbose = true;
     defaultCacheTtl = agentTTL;
     maxCacheTtl = agentTTL;
