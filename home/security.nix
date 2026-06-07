@@ -9,6 +9,8 @@ in
     yubikey-manager
     yubikey-personalization
     pinentryPkg
+    pcsc-tools # for pcsc_scan
+    cryptsetup
   ];
 
   home.sessionVariables = {
