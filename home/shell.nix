@@ -22,17 +22,6 @@
     enable = true;
   };
 
-  programs.mise = {
-    enable = true;
-    globalConfig = {
-      tools = {
-        node = "lts";
-        bun = "latest";
-        go = "latest";
-      };
-    };
-  };
-
   programs.nushell = {
     enable = true;
   };

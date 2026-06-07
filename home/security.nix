@@ -1,13 +1,14 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 let
   agentTTL = 60 * 60 * 8; # 8 hours in seconds
+  pinentryPkg = if config.gui.enable then pkgs.pinentry-qt else pkgs.pinentry-tty;
 in
 {
   home.packages = with pkgs; [
     bitwarden-cli
     yubikey-manager
     yubikey-personalization
-    pinentry-qt
+    pinentryPkg
   ];
 
   home.sessionVariables = {
@@ -27,7 +28,7 @@ in
   services.gpg-agent = {
     enable = true;
     enableSshSupport = true; # THIS is what makes the A subkey act as your SSH agent
-    pinentry.package = pkgs.pinentry-qt; # Qt fits your Plasma session; -curses for TTY-only (-tty)
+    pinentry.package = pinentryPkg;
     verbose = true;
     defaultCacheTtl = agentTTL;
     maxCacheTtl = agentTTL;

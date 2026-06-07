@@ -61,6 +61,9 @@ with lib;
         cargo
         rustc
 
+        # Node (Might want to pin it)
+        nodejs_latest
+
         # Python
         python3Packages.ptpython
 
@@ -81,6 +84,16 @@ with lib;
         # Docs / static sites
         hugo
       ];
+
+      programs.mise = {
+        enable = true;
+        globalConfig = {
+          tools = {
+            node = "system";
+            go = "latest";
+          };
+        };
+      };
 
       home.sessionVariables = {
         EDITOR = "nvim";

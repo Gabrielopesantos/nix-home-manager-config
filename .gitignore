@@ -1,1 +1,6 @@
-.direnv
+# Nix
+result
+result-*
+
+# direnv
+.direnv/

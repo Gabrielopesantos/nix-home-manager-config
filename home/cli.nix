@@ -15,6 +15,11 @@
     tldr
     tokei
     tree
+    nvd
+    nix-diff
+    file
+    zip
+    unzip
   ];
 
   programs.jq.enable = true;
