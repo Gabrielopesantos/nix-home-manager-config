@@ -90,13 +90,13 @@ with lib;
         enable = true;
         globalConfig = {
           tools = {
-            node = "system";
             go = "latest";
           };
         };
       };
 
       home.sessionVariables = {
+        MISE_DISABLE_TOOLS = "node";
         EDITOR = "nvim";
       };
 

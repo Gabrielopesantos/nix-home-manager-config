@@ -51,6 +51,11 @@
       core.editor = "nvim";
       color.ui = true;
       merge.conflictStyle = "zdiff3";
+      pull.rebase = true;
+      fetch.prune = true;
+      fetch.pruneTags = true;
+      rerere.enabled = true; # remember merge resolutions
+      commit.verbose = true;
 
       alias = {
         # status / diff
