@@ -7,7 +7,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs =
@@ -15,39 +14,39 @@
       self,
       nixpkgs,
       home-manager,
-      flake-utils,
     }:
     let
-      system = "x86_64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = true;
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      lib = nixpkgs.lib;
+      forAllSystems = lib.genAttrs systems;
+      pkgsFor =
+        system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
         };
-      };
     in
     {
-      homeConfigurations = {
-        "gabriel" = home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-
-          # Specify your home configuration modules here, for example,
-          # the path to your home.nix.
-          modules = [ ./home ];
-
-          # Optionally use extraSpecialArgs
-          # to pass through arguments to home.nix
+      homeConfigurations =
+        let
+          mkHomeConfig =
+            system:
+            home-manager.lib.homeManagerConfiguration {
+              pkgs = pkgsFor system;
+              modules = [ ./home ];
+            };
+        in
+        {
+          "gabriel" = mkHomeConfig "x86_64-linux";
+          "gabriel@aarch64-linux" = mkHomeConfig "aarch64-linux";
         };
-      };
-    }
-    // (flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs { system = system; };
-      in
-      {
-        devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
+
+      devShells = forAllSystems (system: {
+        default = (pkgsFor system).mkShell {
+          packages = with (pkgsFor system); [
             black
             cargo
             git-crypt
@@ -55,6 +54,6 @@
             pre-commit
           ];
         };
-      }
-    ));
+      });
+    };
 }

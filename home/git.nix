@@ -50,13 +50,7 @@
       status.submoduleSummary = true;
       core.editor = "nvim";
       color.ui = true;
-      delta.navigate = true;
-      delta.dark = true;
-      delta.side-by-side = true;
-      delta.line-numbers = true;
-      delta.syntax-theme = "base16-256";
       merge.conflictStyle = "zdiff3";
-      # commit.gpgsign = true;
 
       alias = {
         # status / diff
@@ -137,5 +131,11 @@
   programs.delta = {
     enable = true;
     enableGitIntegration = true;
+    options = {
+      navigate = true;
+      side-by-side = true;
+      line-numbers = true;
+      syntax-theme = "base16-256";
+    };
   };
 }

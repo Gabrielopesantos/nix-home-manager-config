@@ -5,10 +5,6 @@
     homeDirectory = "/home/${username}";
   };
 
-  home.sessionVariables = {
-    NIXPKGS_ALLOW_UNFREE = "1";
-  };
-
   home.sessionPath = [
     "$HOME/.local/bin"
     "$HOME/bin"

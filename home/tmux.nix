@@ -11,7 +11,7 @@ in
     baseIndex = 1;
     keyMode = "vi";
     clock24 = true;
-    escapeTime = 0;
+    escapeTime = 50;
     historyLimit = 50000;
     shell = "${pkgs.fish}/bin/fish";
     terminal = "xterm-256color";
@@ -25,18 +25,12 @@ in
       # renumber windows sequentially after closing any of them
       set -g renumber-windows on
 
-      # Faster escape sequences (default is 500ms).
-      # This helps when exiting insert mode in Vim: http://superuser.com/a/252717/65504
-      set -s escape-time 50
-
       # Set mouse on
       set -gq mouse on
 
       # Neovim says it needs this
       set-option -g focus-events on
 
-      # Use vim keybindings in copy mode
-      setw -g mode-keys vi
       # Setup 'v' to begin selection
       bind-key -T copy-mode-vi v send -X begin-selection
       # Setup 'y' to copy selection
@@ -48,9 +42,6 @@ in
       bind '"' split-window -c "#{pane_current_path}"
       bind % split-window -h -c "#{pane_current_path}"
       bind c new-window -c "#{pane_current_path}"
-
-      set-window-option -g mode-keys vi # What does this do?
-      #bind -T copy-mode-vi v send-keys -X begin-selection
 
       # vim-like pane switching
       bind -r ^ last-window

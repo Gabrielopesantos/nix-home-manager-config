@@ -4,10 +4,11 @@
     bat
     fastfetch
     fd
+    jq
+    yq
     glow
     gnumake
     httpie
-    jq
     rclone
     ripgrep
     sd
@@ -21,6 +22,4 @@
     zip
     unzip
   ];
-
-  programs.jq.enable = true;
 }

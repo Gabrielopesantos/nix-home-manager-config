@@ -42,48 +42,49 @@ with lib;
         };
     in
     {
-      home.packages = with pkgs; [
-        # Editors
-        neovim
+      home.packages =
+        (with pkgs; [
+          # Editors
+          neovim
 
-        # Nix
-        nixd
-        nixfmt
+          # Nix
+          nixd
+          nixfmt
 
-        # Languages
-        odin
-        zig
+          # Languages
+          odin
+          zig
 
-        # Go
-        golangci-lint
+          # Go
+          golangci-lint
 
-        # Rust
-        cargo
-        rustc
+          # Rust
+          cargo
+          rustc
 
-        # Node (Might want to pin it)
-        nodejs_latest
+          # Node (Might want to pin it)
+          nodejs_latest
 
-        # Python
-        python3Packages.ptpython
+          # Python
+          python3Packages.ptpython
 
-        # Databases
-        litecli
-        pgcli
-        postgresql
+          # Databases
+          litecli
+          pgcli
+          postgresql
 
-        # Utilities
-        ccusage
-        tree-sitter
-        watchexec
+          # Utilities
+          tree-sitter
+          watchexec
 
-        # Debugging
-        ltrace
-        valgrind
+          # Debugging
+          ltrace
+          valgrind
 
-        # Docs / static sites
-        hugo
-      ];
+          # Docs / static sites
+          hugo
+        ])
+        ++ lib.optionals (pkgs.stdenv.isLinux && pkgs.stdenv.hostPlatform.isx86_64) [ ccusage ];
 
       programs.mise = {
         enable = true;
