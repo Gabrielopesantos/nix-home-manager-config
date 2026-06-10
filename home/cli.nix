@@ -21,5 +21,7 @@
     file
     zip
     unzip
+    lsof
+    dnsutils
   ];
 }

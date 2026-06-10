@@ -31,6 +31,8 @@ with lib;
       icon-library
       signal-desktop
       zed-editor
+      nextcloud-client
+      bitwarden-desktop
     ];
 
     programs.vscode.enable = true;

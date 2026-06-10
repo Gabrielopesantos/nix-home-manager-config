@@ -27,6 +27,9 @@
         import nixpkgs {
           inherit system;
           config.allowUnfree = true;
+          config.permittedInsecurePackages = [
+            "electron-39.8.10" # For bitwarden-desktop
+          ];
         };
     in
     {
