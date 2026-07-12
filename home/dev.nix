@@ -14,36 +14,41 @@ with lib;
 
   config = mkIf config.devTools.enable (
     let
-      ccusage =
-        let
-          nativePkg = pkgs.fetchurl {
-            url = "https://registry.npmjs.org/@ccusage/ccusage-linux-x64/-/ccusage-linux-x64-20.0.6.tgz";
-            hash = "sha256-Wl94vPpOZ4A74sG3AFDz64grUmUxPTF/PIWze7yO/xw=";
-          };
-        in
-        pkgs.stdenvNoCC.mkDerivation rec {
-          pname = "ccusage";
-          version = "20.0.6";
-          src = pkgs.fetchurl {
-            url = "https://registry.npmjs.org/${pname}/-/${pname}-${version}.tgz";
-            hash = "sha256-hXKQF7jUVz71/BKn++V7S+OC9uCuc0+6TYYZ5MKjGcM=";
-          };
-          nativeBuildInputs = [ pkgs.makeWrapper ];
-          unpackPhase = "tar xf $src";
-          sourceRoot = "package";
-          installPhase = ''
-            mkdir -p $out/lib/ccusage/node_modules/@ccusage/ccusage-linux-x64 $out/bin
-            cp -r . $out/lib/ccusage
-            tar xf ${nativePkg} -C $out/lib/ccusage/node_modules/@ccusage/ccusage-linux-x64 --strip-components=1
-            chmod +x $out/lib/ccusage/node_modules/@ccusage/ccusage-linux-x64/bin/ccusage
-            makeWrapper ${pkgs.nodejs}/bin/node $out/bin/ccusage \
-              --add-flags "$out/lib/ccusage/dist/cli.js"
-          '';
-        };
+      claudeCavemanPlugin = pkgs.fetchFromGitHub {
+        name = "claude-plugin-caveman";
+        owner = "JuliusBrussee";
+        repo = "caveman";
+        rev = "25d22f864ad68cc447a4cb93aefde918aa4aec9f";
+        hash = "sha256-FbmfhFaPs/SnSZdfNdErdIUHXt1FfBzErpPpLy8kdIc=";
+      };
+
+      claudeKarpathyPlugin = pkgs.fetchFromGitHub {
+        name = "claude-plugin-andrej-karpathy-skills";
+        owner = "forrestchang";
+        repo = "andrej-karpathy-skills";
+        rev = "2c606141936f1eeef17fa3043a72095b4765b9c2";
+        hash = "sha256-4z/wRdYH7UXRzF8RJU0sw8xbpx0BW/7CBv5sVEC2knY=";
+      };
+
+      claudeOfficialPlugins = pkgs.fetchFromGitHub {
+        name = "claude-plugin-official";
+        owner = "anthropics";
+        repo = "claude-plugins-official";
+        rev = "1afdc0d238b61673e8f2bb57622e73641000bb75";
+        hash = "sha256-JcP7bPN2Ddn99ckbj2Nu9PNr1ylBXppG6xw20fH01sA=";
+      };
+
+      # Symlinked per-skill-directory (not as one ".claude/skills" symlink) so these can
+      # coexist with programs.claude-code.plugins, which manages its own
+      # ".claude/skills/<plugin-name>" entries under the same parent directory.
+      vendoredSkillNames = builtins.attrNames (
+        lib.filterAttrs (_: type: type == "directory") (builtins.readDir ../claude/skills)
+      );
     in
     {
-      home.packages =
-        (with pkgs; [
+      home.packages = (
+        with pkgs;
+        [
           # Editors
           neovim
 
@@ -83,8 +88,11 @@ with lib;
 
           # Docs / static sites
           hugo
-        ])
-        ++ lib.optionals (pkgs.stdenv.isLinux && pkgs.stdenv.hostPlatform.isx86_64) [ ccusage ];
+
+          # Usage tracking
+          ccusage
+        ]
+      );
 
       programs.mise = {
         enable = true;
@@ -102,18 +110,34 @@ with lib;
 
       programs.claude-code.enable = true;
 
+      # Loaded via --plugin-dir, not the marketplace/install registry, so Claude Code never
+      # needs to write to ~/.claude/plugins/*.json for these to work — no clobbering on switch.
+      programs.claude-code.plugins = [
+        claudeCavemanPlugin
+        claudeKarpathyPlugin
+        "${claudeOfficialPlugins}/plugins/code-review"
+        "${claudeOfficialPlugins}/plugins/skill-creator"
+      ];
+
       # Use mkOutOfStoreSymlink so Claude Code can write to settings.json at runtime.
       # The Nix store is read-only, so a normal home.file symlink would cause EACCES.
-      home.file.".claude/settings.json" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/claude/settings.json";
-      };
+      home.file = lib.mkMerge [
+        {
+          ".claude/settings.json".source =
+            config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-home-manager-config/claude/settings.json";
 
-      home.file.".claude/statusline-command.sh".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/claude/statusline-command.sh";
-
-      home.file.".claude/rules/conventional-commits.md" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.config/home-manager/claude/rules/conventional-commits.md";
-      };
+          ".claude/statusline-command.sh".source =
+            config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-home-manager-config/claude/statusline-command.sh";
+        }
+        (lib.listToAttrs (
+          map (
+            name:
+            lib.nameValuePair ".claude/skills/${name}" {
+              source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-home-manager-config/claude/skills/${name}";
+            }
+          ) vendoredSkillNames
+        ))
+      ];
     }
   );
 }

@@ -14,7 +14,6 @@ with lib;
     home.packages = with pkgs; [
       brave
       zathura
-      kdePackages.okular
       xournalpp
       gromit-mpx
       protonmail-desktop
@@ -23,7 +22,6 @@ with lib;
       obsidian
       discord
       audacious
-      audacity
       vlc
       yubioath-flutter
       sqlitebrowser
@@ -40,7 +38,7 @@ with lib;
     programs.ghostty = {
       enable = true;
       settings = {
-        font-family = "Iosevka Nerd Font Mono";
+        font-family = "Noto Sans Mono";
         font-size = 12;
 
         background-opacity = 0.95;
