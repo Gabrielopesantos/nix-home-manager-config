@@ -91,6 +91,10 @@ with lib;
 
           # Usage tracking
           ccusage
+
+          # OpenCode
+          opencode
+          opencode-desktop
         ]
       );
 

@@ -31,6 +31,7 @@ with lib;
       zed-editor
       nextcloud-client
       bitwarden-desktop
+      tailscale-systray
     ];
 
     programs.vscode.enable = true;

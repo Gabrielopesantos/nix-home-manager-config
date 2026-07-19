@@ -35,4 +35,9 @@ in
     defaultCacheTtl = agentTTL;
     maxCacheTtl = agentTTL;
   };
+
+  programs.ssh.matchBlocks.atlas = {
+    hostname = "atlas.tailcadc07.ts.net";
+    user = "gabriel";
+  };
 }

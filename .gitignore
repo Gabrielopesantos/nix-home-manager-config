@@ -4,3 +4,10 @@ result-*
 
 # direnv
 .direnv/
+
+# Claude Code plugin-managed skill dirs (materialized by the CLI at runtime,
+# reproduced by home/dev.nix via fetchFromGitHub — not hand-authored source)
+/claude/skills/code-review/
+/claude/skills/skill-creator/
+/claude/skills/*-claude-plugin-caveman/
+/claude/skills/*-claude-plugin-andrej-karpathy-skills/
