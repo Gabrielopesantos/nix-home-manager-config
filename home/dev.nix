@@ -18,8 +18,8 @@ with lib;
         name = "claude-plugin-caveman";
         owner = "JuliusBrussee";
         repo = "caveman";
-        rev = "25d22f864ad68cc447a4cb93aefde918aa4aec9f";
-        hash = "sha256-FbmfhFaPs/SnSZdfNdErdIUHXt1FfBzErpPpLy8kdIc=";
+        rev = "0d95a81d35a9f2d123a5e9430d1cfc43d55f1bb0";
+        hash = "sha256-VqRHx3/4SSCnEh3cUJ/he5saIfwNhS0hOzoH/wwtU2o=";
       };
 
       claudeKarpathyPlugin = pkgs.fetchFromGitHub {
@@ -30,12 +30,20 @@ with lib;
         hash = "sha256-4z/wRdYH7UXRzF8RJU0sw8xbpx0BW/7CBv5sVEC2knY=";
       };
 
+      claudeMattPocockPlugin = pkgs.fetchFromGitHub {
+        name = "claude-plugin-mattpocock-skills";
+        owner = "mattpocock";
+        repo = "skills";
+        rev = "9603c1cc8118d08bc1b3bf34cf714f62178dea3b";
+        hash = "sha256-S6pARK99oGGSi6XdFm6zYKHT4gjOCN0wIPZFcl1hREE=";
+      };
+
       claudeOfficialPlugins = pkgs.fetchFromGitHub {
         name = "claude-plugin-official";
         owner = "anthropics";
         repo = "claude-plugins-official";
-        rev = "1afdc0d238b61673e8f2bb57622e73641000bb75";
-        hash = "sha256-JcP7bPN2Ddn99ckbj2Nu9PNr1ylBXppG6xw20fH01sA=";
+        rev = "e09c3b1e5f6e8edbe2cdaf55b5dc38cf87824389";
+        hash = "sha256-etAd44W11CfOzAR3B+NihqUIdPCGI8Eypw2jPiHCkhw=";
       };
 
       # Symlinked per-skill-directory (not as one ".claude/skills" symlink) so these can
@@ -119,6 +127,7 @@ with lib;
       programs.claude-code.plugins = [
         claudeCavemanPlugin
         claudeKarpathyPlugin
+        claudeMattPocockPlugin
         "${claudeOfficialPlugins}/plugins/code-review"
         "${claudeOfficialPlugins}/plugins/skill-creator"
       ];
