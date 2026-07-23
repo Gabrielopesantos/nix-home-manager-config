@@ -78,6 +78,9 @@ with lib;
           # Node (Might want to pin it)
           nodejs_latest
 
+          # Python3
+          python3
+
           # Python
           python3Packages.ptpython
 
@@ -116,7 +119,6 @@ with lib;
       };
 
       home.sessionVariables = {
-        MISE_DISABLE_TOOLS = "node";
         EDITOR = "nvim";
       };
 
