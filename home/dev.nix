@@ -60,29 +60,27 @@ with lib;
           # Editors
           neovim
 
-          # Nix
-          nixd
-          nixfmt
-
-          # Languages
-          odin
-          zig
-
           # Go
+          go
           golangci-lint
 
           # Rust
-          cargo
           rustc
+          cargo
 
-          # Node (Might want to pin it)
+          # Node (floats on nixos-unstable)
           nodejs_latest
 
-          # Python3
-          python3
-
           # Python
+          python3
           python3Packages.ptpython
+
+          # Zig
+          zig
+
+          # Nix
+          nixd
+          nixfmt
 
           # Databases
           litecli
@@ -108,15 +106,6 @@ with lib;
           opencode-desktop
         ]
       );
-
-      programs.mise = {
-        enable = true;
-        globalConfig = {
-          tools = {
-            go = "latest";
-          };
-        };
-      };
 
       home.sessionVariables = {
         EDITOR = "nvim";
