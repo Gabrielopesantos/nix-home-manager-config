@@ -115,13 +115,15 @@ with lib;
 
       # Loaded via --plugin-dir, not the marketplace/install registry, so Claude Code never
       # needs to write to ~/.claude/plugins/*.json for these to work — no clobbering on switch.
-      programs.claude-code.plugins = [
-        claudeCavemanPlugin
-        claudeKarpathyPlugin
-        claudeMattPocockPlugin
-        "${claudeOfficialPlugins}/plugins/code-review"
-        "${claudeOfficialPlugins}/plugins/skill-creator"
-      ];
+      # Attrset form (not a bare list) so directory names under ~/.claude/skills stay fixed
+      # instead of tracking each source's store-path hash, which changes on every pin bump.
+      programs.claude-code.plugins = {
+        claude-plugin-caveman = claudeCavemanPlugin;
+        claude-plugin-andrej-karpathy-skills = claudeKarpathyPlugin;
+        claude-plugin-mattpocock-skills = claudeMattPocockPlugin;
+        code-review = "${claudeOfficialPlugins}/plugins/code-review";
+        skill-creator = "${claudeOfficialPlugins}/plugins/skill-creator";
+      };
 
       # Use mkOutOfStoreSymlink so Claude Code can write to settings.json at runtime.
       # The Nix store is read-only, so a normal home.file symlink would cause EACCES.
