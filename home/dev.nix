@@ -104,6 +104,9 @@ with lib;
           # OpenCode
           opencode
           opencode-desktop
+
+          # Multiplexer
+          herdr
         ]
       );
 

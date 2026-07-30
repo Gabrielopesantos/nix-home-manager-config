@@ -7,6 +7,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    herdr.url = "github:herdrdev/herdr";
   };
 
   outputs =
@@ -14,6 +15,7 @@
       self,
       nixpkgs,
       home-manager,
+      herdr,
     }:
     let
       systems = [
@@ -30,6 +32,7 @@
           config.permittedInsecurePackages = [
             "electron-39.8.10" # For bitwarden-desktop
           ];
+          overlays = [ herdr.overlays.default ];
         };
     in
     {
