@@ -57,6 +57,7 @@
             cargo
             git-crypt
             nixfmt
+            npins
             pre-commit
           ];
         };

@@ -1,0 +1,60 @@
+{
+  "pins": {
+    "claude-plugin-caveman": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "JuliusBrussee",
+        "repo": "caveman"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.10.0",
+      "revision": "467a052b0b645f57bf5be80ca894915c2b3d7e1d",
+      "url": "https://api.github.com/repos/JuliusBrussee/caveman/tarball/v1.10.0",
+      "hash": "0qq0dqlzzskmbhdlagqp93bvwbs1y177sc9y5y5qkkm1pwyw8lyy"
+    },
+    "claude-plugin-karpathy-skills": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "forrestchang",
+        "repo": "andrej-karpathy-skills"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "2c606141936f1eeef17fa3043a72095b4765b9c2",
+      "url": "https://github.com/forrestchang/andrej-karpathy-skills/archive/2c606141936f1eeef17fa3043a72095b4765b9c2.tar.gz",
+      "hash": "0xljnr058v7y0v1gwnq13nkmpk635i6ja4azrk8lbv87sr2z0gz3"
+    },
+    "claude-plugin-mattpocock-skills": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "mattpocock",
+        "repo": "skills"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
+      "url": "https://github.com/mattpocock/skills/archive/84fdeffd12f2ee307994d1eb6feb48173b6e0502.tar.gz",
+      "hash": "0lb7da1jf6jvnw0fvynkxbsc2qlcnd8h6w9s7x31177rjqj95ix6"
+    },
+    "claude-plugins-official": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "anthropics",
+        "repo": "claude-plugins-official"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "d33732b67aef18b3409d2c566e1d15541906726d",
+      "url": "https://github.com/anthropics/claude-plugins-official/archive/d33732b67aef18b3409d2c566e1d15541906726d.tar.gz",
+      "hash": "0yac9b8jc4d4gnxbwhzlhp6nyhkpx1xqi9i7fk1hspdcw29hmf39"
+    }
+  },
+  "version": 5
+}
