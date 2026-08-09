@@ -18,17 +18,14 @@ with lib;
       gromit-mpx
       protonmail-desktop
       proton-vpn
-      httpie-desktop
       obsidian
       discord
-      audacious
       vlc
       yubioath-flutter
       sqlitebrowser
       wireshark
       icon-library
       signal-desktop
-      zed-editor
       nextcloud-client
       bitwarden-desktop
       kooha
@@ -37,8 +34,6 @@ with lib;
     services.tailscale-systray = {
       enable = true;
     };
-
-    programs.vscode.enable = true;
 
     programs.ghostty = {
       enable = true;
@@ -50,7 +45,7 @@ with lib;
         background-blur-radius = 20;
 
         mouse-hide-while-typing = true;
-        command = "bash -l -c nu";
+        command = "${pkgs.fish}/bin/fish --login";
       };
     };
   };

@@ -6,12 +6,6 @@
 }:
 with lib;
 {
-  options = {
-    devTools.enable = mkEnableOption "developer tools and applications" // {
-      default = true;
-    };
-  };
-
   config = mkIf config.devTools.enable (
     let
       jsonFormat = pkgs.formats.json { };
@@ -50,85 +44,25 @@ with lib;
 
       claudeSettingsFile = jsonFormat.generate "claude-code-settings.json" claudeSettings;
 
-      # Plugin sources are pinned via npins (../npins), not fetchFromGitHub, so
+      # Plugin sources are pinned via npins (../../npins), not fetchFromGitHub, so
       # `npins update` can bump all of them in one lockfile diff without
       # declaring each repo as a flake input. Run `npins add ...` to add a new
-      # one; see ../npins/sources.json for current pins.
-      pluginSources = import ../npins;
+      # one; see ../../npins/sources.json for current pins.
+      pluginSources = import ../../npins;
 
       claudeCavemanPlugin = pluginSources.claude-plugin-caveman;
       claudeKarpathyPlugin = pluginSources.claude-plugin-karpathy-skills;
       claudeMattPocockPlugin = pluginSources.claude-plugin-mattpocock-skills;
       claudeOfficialPlugins = pluginSources.claude-plugins-official;
-
-      # Symlinked per-skill-directory (not as one ".claude/skills" symlink) so these can
-      # coexist with programs.claude-code.plugins, which manages its own
-      # ".claude/skills/<plugin-name>" entries under the same parent directory.
-      vendoredSkillNames = builtins.attrNames (
-        lib.filterAttrs (_: type: type == "directory") (builtins.readDir ../claude/skills)
-      );
     in
     {
-      home.packages = (
-        with pkgs;
-        [
-          # Editors
-          neovim
-          helix
+      home.packages = with pkgs; [
+        opencode
+        opencode-desktop
 
-          # Go
-          go
-          golangci-lint
-
-          # Rust
-          rustc
-          cargo
-
-          # Node (floats on nixos-unstable)
-          nodejs_latest
-
-          # Python
-          python3
-          python3Packages.ptpython
-
-          # Zig
-          zig
-
-          # Nix
-          nixd
-          nixfmt
-
-          # Databases
-          litecli
-          pgcli
-          postgresql
-
-          # Utilities
-          tree-sitter
-          watchexec
-
-          # Debugging
-          ltrace
-          valgrind
-
-          # Docs / static sites
-          hugo
-
-          # Usage tracking
-          ccusage
-
-          # OpenCode
-          opencode
-          opencode-desktop
-
-          # Multiplexer
-          herdr
-        ]
-      );
-
-      home.sessionVariables = {
-        EDITOR = "nvim";
-      };
+        # Usage tracking
+        ccusage
+      ];
 
       programs.claude-code.enable = true;
 
@@ -153,20 +87,19 @@ with lib;
         install -Dm644 ${claudeSettingsFile} "${config.home.homeDirectory}/.claude/settings.json"
       '';
 
-      home.file = lib.mkMerge [
-        {
-          ".claude/statusline-command.sh".source =
-            config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-home-manager-config/claude/statusline-command.sh";
-        }
-        (lib.listToAttrs (
-          map (
-            name:
-            lib.nameValuePair ".claude/skills/${name}" {
-              source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-home-manager-config/claude/skills/${name}";
-            }
-          ) vendoredSkillNames
-        ))
-      ];
+      # The agent-state hook scripts are owned by herdr ("managed by herdr;
+      # reinstalling or updating the integration overwrites this file"), so they
+      # are installed by herdr's own installer rather than vendored here. This
+      # config only declares the reference to the Claude hook above. Without this
+      # step a fresh host gets a settings.json pointing at a script that does not
+      # exist.
+      home.activation.herdrIntegrations = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        $DRY_RUN_CMD ${pkgs.herdr}/bin/herdr integration install claude || true
+        $DRY_RUN_CMD ${pkgs.herdr}/bin/herdr integration install opencode || true
+      '';
+
+      home.file.".claude/statusline-command.sh".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-home-manager-config/claude/statusline-command.sh";
     }
   );
 }

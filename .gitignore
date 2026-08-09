@@ -4,6 +4,3 @@ result-*
 
 # direnv
 .direnv/
-
-# Claude Code plugin-managed skill dirs
-/claude/skills/*

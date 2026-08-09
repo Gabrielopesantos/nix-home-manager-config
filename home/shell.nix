@@ -11,8 +11,12 @@
     enable = true;
   };
 
+  # Installs the fzf binary (which fzf-fish depends on) and FZF_DEFAULT_OPTS,
+  # but leaves key bindings to fzf-fish - otherwise both bind ctrl-r and the
+  # winner is decided by source order rather than by us.
   programs.fzf = {
     enable = true;
+    enableFishIntegration = false;
     tmux.enableShellIntegration = true;
   };
 
@@ -26,11 +30,8 @@
     enable = true;
   };
 
-  programs.starship = {
+  programs.zoxide = {
     enable = true;
-    settings = {
-      scan_timeout = 10;
-    };
   };
 
   programs.fish = {
@@ -38,16 +39,34 @@
 
     plugins = [
       {
-        name = "z";
-        src = pkgs.fishPlugins.z.src;
-      }
-      {
         name = "plugin-git";
         src = pkgs.fishPlugins.plugin-git.src;
       }
       {
         name = "bang-bang";
         src = pkgs.fishPlugins.bang-bang.src;
+      }
+      {
+        name = "autopair";
+        src = pkgs.fishPlugins.autopair.src;
+      }
+      {
+        name = "colored-man-pages";
+        src = pkgs.fishPlugins.colored-man-pages.src;
+      }
+      {
+        name = "fzf-fish";
+        src = pkgs.fishPlugins.fzf-fish.src;
+      }
+      {
+        name = "plugin-sudope";
+        src = pkgs.fishPlugins.plugin-sudope.src;
+      }
+      {
+        # Prompt. Configured by the interactive `tide configure` wizard, which
+        # writes fish universal variables.
+        name = "tide";
+        src = pkgs.fishPlugins.tide.src;
       }
       {
         name = "fish-completion-sync";
@@ -60,16 +79,30 @@
       }
     ];
 
-    shellAliases = {
+    shellAbbrs = {
+      k = "kubectl";
       lg = "lazygit";
       vim = "nvim";
-      k = "kubectl";
+    };
+
+    shellAliases = {
       cat = "bat";
     };
+
+    # -P-c passes -c to grotty, restoring overstrike output instead of SGR
+    # escapes, which is what the colored-man-pages plugin's LESS_TERMCAP_*
+    # colors act on. (GROFF_NO_SGR does not work: man-db overrides it.)
+    shellInit = ''
+      set -gx MANROFFOPT -P-c
+    '';
 
     interactiveShellInit = ''
       # Ctrl+X,E to edit command line in editor (like zsh)
       bind \cx\ce edit_command_buffer
+
+      # fzf-fish owns all fzf bindings. --directory on ctrl-t keeps the key that
+      # fzf's own file widget used before its integration was disabled.
+      fzf_configure_bindings --directory=ctrl-t --history=ctrl-r
     '';
   };
 }

@@ -8,6 +8,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     herdr.url = "github:herdrdev/herdr";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -16,6 +20,7 @@
       nixpkgs,
       home-manager,
       herdr,
+      nix-index-database,
     }:
     let
       systems = [
@@ -39,26 +44,28 @@
       homeConfigurations =
         let
           mkHomeConfig =
-            system:
+            { host, system }:
             home-manager.lib.homeManagerConfiguration {
               pkgs = pkgsFor system;
-              modules = [ ./home ];
+              modules = [
+                nix-index-database.homeModules.nix-index
+                ./home
+                ./hosts/${host}.nix
+              ];
             };
         in
         {
-          "gabriel" = mkHomeConfig "x86_64-linux";
-          "gabriel@aarch64-linux" = mkHomeConfig "aarch64-linux";
+          "gabriel" = mkHomeConfig {
+            host = "casper";
+            system = "x86_64-linux";
+          };
         };
 
       devShells = forAllSystems (system: {
         default = (pkgsFor system).mkShell {
           packages = with (pkgsFor system); [
-            black
-            cargo
             git-crypt
-            nixfmt
             npins
-            pre-commit
           ];
         };
       });

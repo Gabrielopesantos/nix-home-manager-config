@@ -1,9 +1,6 @@
 {
-  home = rec {
-    stateVersion = "25.05";
-    username = "gabriel";
-    homeDirectory = "/home/${username}";
-  };
+  # home.username / home.homeDirectory are set per host in ../hosts/<name>.nix
+  home.stateVersion = "25.05";
 
   home.sessionPath = [
     "$HOME/.local/bin"

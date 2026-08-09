@@ -28,7 +28,16 @@ nix run home-manager -- switch --impure --flake .#gabriel
 Subsequent switches: `make update`
 Headless machines (no GUI): `make headless`
 
-## 4. Set fish as default shell (non-NixOS only)
+## 4. Configure the fish prompt
+
+tide stores its configuration in fish universal variables, so it cannot be managed
+declaratively. Run the wizard once per machine:
+
+```sh
+tide configure
+```
+
+## 5. Set fish as default shell (non-NixOS only)
 
 Home Manager installs fish but can't write `/etc/shells` on non-NixOS:
 

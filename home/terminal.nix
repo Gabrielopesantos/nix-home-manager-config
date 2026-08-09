@@ -3,6 +3,47 @@ let
   configFilePath = "${config.xdg.configHome}/tmux/tmux.conf";
 in
 {
+  programs.herdr = {
+    enable = true;
+    settings = {
+      onboarding = false;
+
+      experimental.pane_history = true;
+
+      theme = {
+        name = "one-dark";
+        auto_switch = false;
+      };
+
+      ui = {
+        agent_panel_sort = "spaces";
+        toast.delivery = "herdr";
+        sound.enabled = false;
+      };
+
+      terminal = {
+        default_shell = "fish";
+        # Replaces tmux's `-c "#{pane_current_path}"` split/new-window binds.
+        new_cwd = "follow";
+      };
+
+      keys = {
+        prefix = "ctrl+a";
+
+        command = [
+          {
+            key = "prefix+alt+g";
+            type = "popup";
+            command = "lazygit";
+            description = "run lazygit";
+            width = "80%";
+            height = "80%";
+          }
+        ];
+      };
+    };
+  };
+
   programs.tmux = {
     enable = true;
     # Binds `C-a` to last-window

@@ -4,11 +4,12 @@
     ./core.nix
     ./shell.nix
     ./cli.nix
-    ./dev.nix
-    ./ops.nix
+    ./dev
+    ./net.nix
+    ./cloud.nix
     ./security.nix
     ./git.nix
-    ./tmux.nix
+    ./terminal.nix
     ./gui.nix
   ];
 }
