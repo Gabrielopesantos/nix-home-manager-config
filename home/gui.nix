@@ -10,30 +10,42 @@ with lib;
     default = true;
   };
 
-  config = mkIf config.gui.enable {
-    home.packages = with pkgs; [
-      # wl-copy/wl-paste - system clipboard target for tmux's yank and
-      # extrakto plugins (both auto-detect it on Wayland).
-      wl-clipboard
+  # Split out so a work machine can have the desktop infrastructure below
+  # (terminal, pinentry-qt via ../home/security.nix) without the personal apps.
+  options.personalApps.enable = mkEnableOption "personal (non-work) desktop applications" // {
+    default = true;
+  };
 
-      brave
-      zathura
-      xournalpp
-      gromit-mpx
-      protonmail-desktop
-      proton-vpn
-      obsidian
-      discord
-      vlc
-      yubioath-flutter
-      sqlitebrowser
-      wireshark
-      icon-library
-      signal-desktop
-      nextcloud-client
-      bitwarden-desktop
-      kooha
-    ];
+  config = mkIf config.gui.enable {
+    home.packages =
+      (with pkgs; [
+        # wl-copy/wl-paste - system clipboard target for tmux's yank and
+        # extrakto plugins (both auto-detect it on Wayland).
+        wl-clipboard
+
+        zathura
+        xournalpp
+        gromit-mpx
+        obsidian
+        yubioath-flutter
+        sqlitebrowser
+        wireshark
+        icon-library
+        kooha
+      ])
+      ++ optionals config.personalApps.enable (
+        with pkgs;
+        [
+          brave
+          protonmail-desktop
+          proton-vpn
+          discord
+          vlc
+          signal-desktop
+          nextcloud-client
+          bitwarden-desktop
+        ]
+      );
 
     services.tailscale-systray = {
       enable = true;
@@ -45,11 +57,13 @@ with lib;
         font-family = "Noto Sans Mono";
         font-size = 12;
 
-        background-opacity = 0.95;
-        background-blur-radius = 20;
+        window-theme = "dark";
+        background-blur = true;
 
+        cursor-style = "block";
         mouse-hide-while-typing = true;
         command = "${pkgs.fish}/bin/fish --login";
+        shell-integration = "fish";
       };
     };
   };

@@ -61,6 +61,10 @@
             host = "casper";
             system = "x86_64-linux";
           };
+          "gsantos@lenovo" = mkHomeConfig {
+            host = "lenovo";
+            system = "x86_64-linux";
+          };
         };
 
       devShells = forAllSystems (system: {

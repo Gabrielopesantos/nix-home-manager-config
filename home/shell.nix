@@ -104,6 +104,8 @@
       k = "kubectl";
       lg = "lazygit";
       vim = "nvim";
+      wt = "git worktree";
+      tf = "terraform";
     };
 
     shellAliases = {

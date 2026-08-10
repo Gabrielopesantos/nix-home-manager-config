@@ -6,43 +6,33 @@
 }:
 with lib;
 {
+  # Exposed as an option rather than a `let` binding so a host can contribute keys
+  # (e.g. a work machine pointing Claude Code at Bedrock).
+  #
+  # types.attrsOf types.anything deep-merges attrsets but conflicts on lists rather
+  # than concatenating them, which breaks the case that matters here: a host adding
+  # hooks.SessionStart entries alongside the herdr one below. Hence the explicit
+  # coercion to a merge-friendly list type for `hooks` (Claude Code runs every
+  # matching entry, so concatenation is the correct semantic).
+  # Scalars use mkDefault below so a host can override them outright.
+  options.claudeCode.settings = mkOption {
+    type = types.submodule {
+      freeformType = types.attrsOf types.anything;
+      options.hooks = mkOption {
+        type = types.attrsOf (types.listOf types.anything);
+        default = { };
+        description = "Claude Code hook definitions, keyed by event name.";
+      };
+    };
+    default = { };
+    description = "Contents of ~/.claude/settings.json. Hosts may add or override keys.";
+  };
+
   config = mkIf config.devTools.enable (
     let
       jsonFormat = pkgs.formats.json { };
 
-      claudeSettings = {
-        alwaysThinkingEnabled = true;
-        effortLevel = "high";
-        hooks.SessionStart = [
-          {
-            matcher = "*";
-            hooks = [
-              {
-                type = "command";
-                command = "bash '${config.home.homeDirectory}/.claude/hooks/herdr-agent-state.sh' session";
-                timeout = 10;
-              }
-            ];
-          }
-        ];
-        mcpServers = { };
-        model = "claude-sonnet-5[1m]";
-        permissions = {
-          allow = [
-            "Read(${config.home.homeDirectory}/.claude/**)"
-            "Read(${config.home.homeDirectory}/.agents/**)"
-          ];
-          defaultMode = "plan";
-        };
-        statusLine = {
-          type = "command";
-          command = "bash ${config.home.homeDirectory}/.claude/statusline-command.sh";
-        };
-        theme = "dark-ansi";
-        tui = "fullscreen";
-      };
-
-      claudeSettingsFile = jsonFormat.generate "claude-code-settings.json" claudeSettings;
+      claudeSettingsFile = jsonFormat.generate "claude-code-settings.json" config.claudeCode.settings;
 
       # Plugin sources are pinned via npins (../../npins), not fetchFromGitHub, so
       # `npins update` can bump all of them in one lockfile diff without
@@ -56,6 +46,38 @@ with lib;
       claudeOfficialPlugins = pluginSources.claude-plugins-official;
     in
     {
+      claudeCode.settings = {
+        alwaysThinkingEnabled = true;
+        effortLevel = mkDefault "high";
+        hooks.SessionStart = [
+          {
+            matcher = "*";
+            hooks = [
+              {
+                type = "command";
+                command = "bash '${config.home.homeDirectory}/.claude/hooks/herdr-agent-state.sh' session";
+                timeout = 10;
+              }
+            ];
+          }
+        ];
+        mcpServers = { };
+        model = mkDefault "claude-sonnet-5[1m]";
+        permissions = {
+          allow = [
+            "Read(${config.home.homeDirectory}/.claude/**)"
+            "Read(${config.home.homeDirectory}/.agents/**)"
+          ];
+          defaultMode = mkDefault "plan";
+        };
+        statusLine = {
+          type = "command";
+          command = "bash ${config.home.homeDirectory}/.claude/statusline-command.sh";
+        };
+        theme = "dark-ansi";
+        tui = "fullscreen";
+      };
+
       home.packages = with pkgs; [
         opencode
 
@@ -74,6 +96,7 @@ with lib;
         claude-plugin-andrej-karpathy-skills = claudeKarpathyPlugin;
         claude-plugin-mattpocock-skills = claudeMattPocockPlugin;
         code-review = "${claudeOfficialPlugins}/plugins/code-review";
+        code-simplifier = "${claudeOfficialPlugins}/plugins/code-simplifier";
         skill-creator = "${claudeOfficialPlugins}/plugins/skill-creator";
       };
 
@@ -97,8 +120,17 @@ with lib;
         $DRY_RUN_CMD ${pkgs.herdr}/bin/herdr integration install opencode || true
       '';
 
-      home.file.".claude/statusline-command.sh".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-home-manager-config/claude/statusline-command.sh";
+      # Copied from the store rather than symlinked out of it with
+      # mkOutOfStoreSymlink. Claude Code only ever reads this script, so it does not
+      # need to be writable, and the out-of-store form bound the build to a specific
+      # clone path: the resulting store symlink is a build input, so activation broke
+      # if the repo was not checked out at ~/nix-home-manager-config (dangling
+      # symlink) or if $HOME was not traversable by the nixbld build users
+      # (EACCES). Editing this script now needs a switch to take effect.
+      home.file.".claude/statusline-command.sh" = {
+        source = ../../claude/statusline-command.sh;
+        executable = true;
+      };
     }
   );
 }

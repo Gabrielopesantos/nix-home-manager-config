@@ -13,3 +13,4 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@v16
       - run: nix flake check
       - run: nix build .#homeConfigurations.gabriel.activationPackage --no-link
+      - run: nix build '.#homeConfigurations."gsantos@lenovo".activationPackage' --no-link
