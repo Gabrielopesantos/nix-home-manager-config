@@ -64,6 +64,10 @@
           "gabriel-headless" = self.homeConfigurations.gabriel.extendModules {
             modules = [ { gui.enable = lib.mkForce false; } ];
           };
+          "gsantos@lenovo" = mkHomeConfig {
+            host = "lenovo";
+            system = "x86_64-linux";
+          };
         };
 
       devShells = forAllSystems (system: {

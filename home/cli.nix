@@ -12,12 +12,15 @@
     glow
     gnumake
     ncdu
+    httpie
+    jujutsu
     rclone
     ripgrep
     sd
     pass
     tldr
     tokei
+    dust
     tree
 
     man-pages
@@ -34,6 +37,13 @@
     nix-tree # interactive browser of a package's dependency closure
     nvd # diffs package versions between two generations
   ];
+
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "OneHalfDark";
+    };
+  };
 
   # comma (`, cowsay hi` - run a package once without installing it)
   programs.nix-index.enable = true;
