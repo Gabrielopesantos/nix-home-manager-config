@@ -13,12 +13,15 @@
     glow
     gnumake
     ncdu
+    httpie
+    jujutsu
     rclone
     ripgrep
     sd
     pass
     tldr
     tokei
+    dust
     tree
 
     man-pages

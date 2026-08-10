@@ -1,15 +1,19 @@
 { lib, pkgs, ... }:
 let
   # Starship's Nerd Font preset (glyphs instead of emoji), minus the parts set below.
-  nerdFontSymbols = removeAttrs (builtins.fromTOML (
-      builtins.readFile (
-        pkgs.runCommand "starship-nerd-font.toml" { } "${pkgs.starship}/bin/starship preset nerd-font-symbols > $out"
-      )
-    )) [
-    "$schema"
-    "character"
-    "git_status"
-  ];
+  nerdFontSymbols =
+    removeAttrs
+      (builtins.fromTOML (
+        builtins.readFile (
+          pkgs.runCommand "starship-nerd-font.toml" { }
+            "${pkgs.starship}/bin/starship preset nerd-font-symbols > $out"
+        )
+      ))
+      [
+        "$schema"
+        "character"
+        "git_status"
+      ];
 in
 {
   programs.bottom.enable = true;
@@ -72,31 +76,33 @@ in
       # fish puts `right_format` on the input line, so it is not used.
       format =
         "$directory$git_branch$git_commit$git_state$git_status$fill"
-        + builtins.concatStringsSep "" (map (m: "$" + m) [
-        "status"
-        "cmd_duration"
-        "username"
-        "hostname"
-        "jobs"
-        "direnv"
-        "bun"
-        "nodejs"
-        "python"
-        "rust"
-        "java"
-        "php"
-        "pulumi"
-        "golang"
-        "gcloud"
-        "kubernetes"
-        "container"
-        "terraform"
-        "aws"
-        "nix_shell"
-        "elixir"
-        "zig"
-        "time"
-      ])
+        + builtins.concatStringsSep "" (
+          map (m: "$" + m) [
+            "status"
+            "cmd_duration"
+            "username"
+            "hostname"
+            "jobs"
+            "direnv"
+            "bun"
+            "nodejs"
+            "python"
+            "rust"
+            "java"
+            "php"
+            "pulumi"
+            "golang"
+            "gcloud"
+            "kubernetes"
+            "container"
+            "terraform"
+            "aws"
+            "nix_shell"
+            "elixir"
+            "zig"
+            "time"
+          ]
+        )
         + "$line_break$character";
       fill.symbol = " ";
 
@@ -122,8 +128,16 @@ in
       # Only show the k8s context in directories that look like k8s projects.
       kubernetes = {
         disabled = false;
-        detect_files = [ "kustomization.yaml" "Chart.yaml" "skaffold.yaml" ];
-        detect_folders = [ "k8s" "kubernetes" "manifests" ];
+        detect_files = [
+          "kustomization.yaml"
+          "Chart.yaml"
+          "skaffold.yaml"
+        ];
+        detect_folders = [
+          "k8s"
+          "kubernetes"
+          "manifests"
+        ];
       };
       time = {
         disabled = false;
@@ -175,6 +189,8 @@ in
       k = "kubectl";
       lg = "lazygit";
       vim = "nvim";
+      wt = "git worktree";
+      tf = "terraform";
     };
 
     shellAliases = {

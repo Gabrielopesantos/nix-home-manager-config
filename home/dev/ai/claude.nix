@@ -6,32 +6,25 @@
 }:
 with lib;
 {
+  options.claudeCode.settings = mkOption {
+    type = types.submodule {
+      freeformType = types.attrsOf types.anything;
+      options.hooks = mkOption {
+        type = types.attrsOf (types.listOf types.anything);
+        default = { };
+        description = "Claude Code hook definitions, keyed by event name.";
+      };
+    };
+    default = { };
+    description = "Contents of ~/.claude/settings.json. Hosts may add or override keys.";
+  };
+
   config = mkIf config.devTools.enable (
     let
       jsonFormat = pkgs.formats.json { };
       plugins = import ./plugins.nix { inherit lib; };
 
-      settings = {
-        alwaysThinkingEnabled = true;
-        effortLevel = "high";
-        mcpServers = { };
-        model = "claude-sonnet-5[1m]";
-        permissions = {
-          allow = [
-            "Read(${config.home.homeDirectory}/.claude/**)"
-            "Read(${config.home.homeDirectory}/.agents/**)"
-          ];
-          defaultMode = "plan";
-        };
-        statusLine = {
-          type = "command";
-          command = "bash ${config.home.homeDirectory}/.claude/statusline-command.sh";
-        };
-        theme = "dark-ansi";
-        tui = "fullscreen";
-      };
-
-      settingsFile = jsonFormat.generate "claude-code-settings.json" settings;
+      settingsFile = jsonFormat.generate "claude-code-settings.json" config.claudeCode.settings;
 
       # Plugin with `skills` flattened to skills/<name>, loaded by default discovery.
       mkSkillPlugin =
@@ -67,6 +60,26 @@ with lib;
       };
     in
     {
+      claudeCode.settings = {
+        alwaysThinkingEnabled = true;
+        effortLevel = mkDefault "high";
+        mcpServers = { };
+        model = mkDefault "claude-sonnet-5[1m]";
+        permissions = {
+          allow = [
+            "Read(${config.home.homeDirectory}/.claude/**)"
+            "Read(${config.home.homeDirectory}/.agents/**)"
+          ];
+          defaultMode = mkDefault "plan";
+        };
+        statusLine = {
+          type = "command";
+          command = "bash ${config.home.homeDirectory}/.claude/statusline-command.sh";
+        };
+        theme = "dark-ansi";
+        tui = "fullscreen";
+      };
+
       programs.claude-code.enable = true;
 
       # ~/.claude/CLAUDE.md
@@ -135,8 +148,10 @@ with lib;
         install -Dm644 ${settingsFile} "${config.home.homeDirectory}/.claude/settings.json"
       '';
 
-      home.file.".claude/statusline-command.sh".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/nix-home-manager-config/claude/statusline-command.sh";
+      home.file.".claude/statusline-command.sh" = {
+        source = ../../../claude/statusline-command.sh;
+        executable = true;
+      };
     }
   );
 }

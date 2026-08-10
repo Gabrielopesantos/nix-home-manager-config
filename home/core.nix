@@ -1,6 +1,9 @@
+{ lib, ... }:
 {
-  # home.username / home.homeDirectory are set per host in ../hosts/<name>.nix
-  home.stateVersion = "25.05";
+  # home.username / home.homeDirectory are set per host in ../hosts/<name>.nix.
+  # mkDefault so a host can pin an older stateVersion: raising it opts into state
+  # migrations for files already on disk, which is a per-machine decision.
+  home.stateVersion = lib.mkDefault "25.05";
 
   home.sessionPath = [
     "$HOME/.local/bin"

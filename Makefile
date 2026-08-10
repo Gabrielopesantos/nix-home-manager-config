@@ -1,10 +1,13 @@
+# Which homeConfigurations output to build. See flake.nix for the full list.
+HOST ?= gabriel
+
 .PHONY: update
 update:
-	home-manager switch --flake .#gabriel
+	home-manager switch --impure --flake .#$(HOST)
 
 .PHONY: headless
 headless:
-	home-manager switch --flake .#gabriel-headless
+	home-manager switch --impure --flake .#gabriel-headless
 
 .PHONY: clean
 clean:
