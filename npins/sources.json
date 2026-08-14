@@ -11,10 +11,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v1.10.0",
-      "revision": "467a052b0b645f57bf5be80ca894915c2b3d7e1d",
-      "url": "https://api.github.com/repos/JuliusBrussee/caveman/tarball/v1.10.0",
-      "hash": "0qq0dqlzzskmbhdlagqp93bvwbs1y177sc9y5y5qkkm1pwyw8lyy"
+      "version": "v2.0.0",
+      "revision": "54bce09f52426ad90f3cac3aef5c1434d7f6c0ee",
+      "url": "https://api.github.com/repos/JuliusBrussee/caveman/tarball/refs/tags/v2.0.0",
+      "hash": "sha256-9G7m2U5EezqKozO03r07nSEBOGS9tO2fjklQVohdqO0="
     },
     "claude-plugin-karpathy-skills": {
       "type": "Git",
@@ -27,7 +27,7 @@
       "submodules": false,
       "revision": "2c606141936f1eeef17fa3043a72095b4765b9c2",
       "url": "https://github.com/forrestchang/andrej-karpathy-skills/archive/2c606141936f1eeef17fa3043a72095b4765b9c2.tar.gz",
-      "hash": "0xljnr058v7y0v1gwnq13nkmpk635i6ja4azrk8lbv87sr2z0gz3"
+      "hash": "sha256-4z/wRdYH7UXRzF8RJU0sw8xbpx0BW/7CBv5sVEC2knY="
     },
     "claude-plugin-mattpocock-skills": {
       "type": "Git",
@@ -38,9 +38,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "84fdeffd12f2ee307994d1eb6feb48173b6e0502",
-      "url": "https://github.com/mattpocock/skills/archive/84fdeffd12f2ee307994d1eb6feb48173b6e0502.tar.gz",
-      "hash": "0lb7da1jf6jvnw0fvynkxbsc2qlcnd8h6w9s7x31177rjqj95ix6"
+      "revision": "8b78b531ab965735c5dc74f6f7a219e1e37326df",
+      "url": "https://github.com/mattpocock/skills/archive/8b78b531ab965735c5dc74f6f7a219e1e37326df.tar.gz",
+      "hash": "sha256-jsXcMkhu15MxR0zXnLLJeni0q0Aew2UxUSojl6zmOvg="
     },
     "claude-plugins-official": {
       "type": "Git",
@@ -51,10 +51,10 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "d33732b67aef18b3409d2c566e1d15541906726d",
-      "url": "https://github.com/anthropics/claude-plugins-official/archive/d33732b67aef18b3409d2c566e1d15541906726d.tar.gz",
-      "hash": "0yac9b8jc4d4gnxbwhzlhp6nyhkpx1xqi9i7fk1hspdcw29hmf39"
+      "revision": "dabf346e1b4808aa5a37b29b0bae6d94f26e1ebc",
+      "url": "https://github.com/anthropics/claude-plugins-official/archive/dabf346e1b4808aa5a37b29b0bae6d94f26e1ebc.tar.gz",
+      "hash": "sha256-5gRK7XL1dlfdTXeSUJa8DNUxSl7goXm6S8+mU6Zprj0="
     }
   },
-  "version": 5
+  "version": 8
 }
