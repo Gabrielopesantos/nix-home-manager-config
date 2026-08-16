@@ -18,6 +18,23 @@
     enable = true;
     enableFishIntegration = false;
     tmux.enableShellIntegration = true;
+    # atuin owns ctrl-r for history search; drop fzf's nushell ctrl-r binding
+    # so they don't fight over it.
+    historyWidget.nushell.command = "";
+  };
+
+  programs.atuin = {
+    enable = true;
+    enableFishIntegration = true;
+    settings = {
+      # Search UI opens as a floating tmux popup instead of drawing over the
+      # pane (falls back to normal rendering outside tmux).
+      tmux.enabled = true;
+      # Adds "workspace" (current git repo tree) to the ctrl-r filter modes
+      # you can cycle through. Default search scope stays global.
+      workspaces = true;
+    };
+    daemon.enable = false;
   };
 
   programs.htop.enable = true;
@@ -100,9 +117,12 @@
       # Ctrl+X,E to edit command line in editor (like zsh)
       bind \cx\ce edit_command_buffer
 
-      # fzf-fish owns all fzf bindings. --directory on ctrl-t keeps the key that
-      # fzf's own file widget used before its integration was disabled.
-      fzf_configure_bindings --directory=ctrl-t --history=ctrl-r
+      # fzf-fish owns fzf bindings except ctrl-r, which atuin's fish
+      # integration binds for history search (--history="" disables fzf-fish's
+      # own ctrl-r binding so it doesn't just lose a race with atuin's).
+      # --directory on ctrl-t keeps the key that fzf's own file widget used
+      # before its integration was disabled.
+      fzf_configure_bindings --directory=ctrl-t --history=""
     '';
   };
 }
