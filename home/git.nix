@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   home.packages = with pkgs; [
     gh
@@ -45,7 +45,10 @@
     settings = {
       user = {
         name = "Gabriel Santos";
-        email = "me@gabrielopesantos.com";
+        # mkDefault so a host can commit under a different address without a
+        # mkForce -- the work laptop sets a company email from its private
+        # ~/.config/home-manager-local/lenovo.nix module.
+        email = lib.mkDefault "me@gabrielopesantos.com";
       };
 
       init.defaultBranch = "main";
