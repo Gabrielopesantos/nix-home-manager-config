@@ -83,8 +83,8 @@ Log out and back in for the change to take effect.
 
 ## 6. Private per-host overrides
 
-Values that should not be in this public repo (work cluster paths, alternate
-Claude Code providers) go in a file outside the repo:
+Values that should not be in this public repo (work cluster paths, work email
+addresses, alternate Claude Code providers) go in a file outside the repo:
 
 ```
 ~/.config/home-manager-local/<host>.nix
@@ -97,6 +97,13 @@ it can set any option, including adding to `claudeCode.settings`:
 {
   home.sessionVariables.KUBECONFIG = "/home/you/.kube/some.config";
   claudeCode.settings.model = "us.anthropic.claude-opus-5[1m]";
+
+  # `../home/git.nix` sets the personal address with `lib.mkDefault`, so a plain
+  # assignment here wins. Without this line the host commits as the personal
+  # identity. The signing key stays shared -- add the work address as a UID on
+  # the key (`gpg --edit-key $KEYID`, `adduid`) or those commits show as
+  # Unverified on GitHub.
+  programs.git.settings.user.email = "you@company.example";
 }
 ```
 
