@@ -37,6 +37,7 @@ with lib;
       # Utilities
       tree-sitter
       watchexec
+      gcc
 
       # Debugging
       ltrace

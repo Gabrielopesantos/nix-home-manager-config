@@ -37,7 +37,9 @@
           config.permittedInsecurePackages = [
             "electron-39.8.10" # For bitwarden-desktop
           ];
-          overlays = [ herdr.overlays.default ];
+          overlays = [
+            herdr.overlays.default
+          ];
         };
     in
     {

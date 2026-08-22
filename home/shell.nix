@@ -26,6 +26,7 @@
   programs.atuin = {
     enable = true;
     enableFishIntegration = true;
+    forceOverwriteSettings = true;
     settings = {
       # Search UI opens as a floating tmux popup instead of drawing over the
       # pane (falls back to normal rendering outside tmux).

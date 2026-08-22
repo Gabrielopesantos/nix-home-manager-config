@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     bat
+    dust
     fastfetch
     fd
     jq
@@ -10,6 +11,7 @@
     glow
     gnumake
     httpie
+    ncdu
     rclone
     ripgrep
     sd
