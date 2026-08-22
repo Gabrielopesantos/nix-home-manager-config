@@ -34,6 +34,9 @@
       # Adds "workspace" (current git repo tree) to the ctrl-r filter modes
       # you can cycle through. Default search scope stays global.
       workspaces = true;
+      # herdr's resume_agents_on_restore feature injects this command as
+      # real keystrokes into panes on restore.
+      history_filter = [ "^claude --resume" ];
     };
     daemon.enable = false;
   };
@@ -115,6 +118,8 @@
     '';
 
     interactiveShellInit = ''
+      set -g fish_color_option magenta
+
       # Ctrl+X,E to edit command line in editor (like zsh)
       bind \cx\ce edit_command_buffer
 
@@ -124,6 +129,24 @@
       # --directory on ctrl-t keeps the key that fzf's own file widget used
       # before its integration was disabled.
       fzf_configure_bindings --directory=ctrl-t --history=""
+
+      # Atuin's fish integration binds Up to the same interactive popup as
+      # ctrl-r (search/filter-mode config only changes what's pre-filtered
+      # inside it, doesn't skip it). Rebind Up back to fish's plain
+      # walk-backward history so ctrl-r stays the only key that opens the
+      # popup. Runs on fish_prompt (not here directly) since atuin's own
+      # binding is sourced after interactiveShellInit and would win a
+      # same-pass rebind here.
+      function _restore_native_up_arrow --on-event fish_prompt
+          bind up up-or-search
+          bind \eOA up-or-search
+          bind \e\[A up-or-search
+          if bind -M insert >/dev/null 2>&1
+              bind -M insert up up-or-search
+              bind -M insert \eOA up-or-search
+              bind -M insert \e\[A up-or-search
+          end
+      end
     '';
   };
 }

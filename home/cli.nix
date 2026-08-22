@@ -10,7 +10,6 @@
     yq
     glow
     gnumake
-    httpie
     ncdu
     rclone
     ripgrep

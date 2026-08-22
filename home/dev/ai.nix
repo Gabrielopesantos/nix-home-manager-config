@@ -58,7 +58,6 @@ with lib;
     {
       home.packages = with pkgs; [
         opencode
-        opencode-desktop
 
         # Usage tracking
         ccusage

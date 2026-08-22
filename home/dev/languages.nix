@@ -8,10 +8,6 @@ with lib;
 {
   config = mkIf config.devTools.enable {
     home.packages = with pkgs; [
-      # Go
-      go
-      golangci-lint
-
       # Rust
       rustc
       cargo
@@ -23,9 +19,6 @@ with lib;
       python3
       python3Packages.ptpython
 
-      # Zig
-      zig
-
       # Nix
       nixd
       nixfmt
@@ -35,7 +28,6 @@ with lib;
       pgcli
 
       # Utilities
-      tree-sitter
       watchexec
       gcc
 
