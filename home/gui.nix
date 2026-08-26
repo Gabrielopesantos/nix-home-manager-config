@@ -12,6 +12,10 @@ with lib;
 
   config = mkIf config.gui.enable {
     home.packages = with pkgs; [
+      # wl-copy/wl-paste - system clipboard target for tmux's yank and
+      # extrakto plugins (both auto-detect it on Wayland).
+      wl-clipboard
+
       brave
       zathura
       xournalpp

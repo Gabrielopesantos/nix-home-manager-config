@@ -57,25 +57,40 @@ in
     shell = "${pkgs.fish}/bin/fish";
     terminal = "xterm-256color";
 
-    plugins = with pkgs.tmuxPlugins; [ yank ];
+    mouse = true;
+    # Neovim says it needs this
+    focusEvents = true;
+    # vim-like pane switching (h/j/k/l) plus H/J/K/L pane resizing
+    customPaneNavigationAndResize = true;
+
+    plugins = with pkgs.tmuxPlugins; [
+      yank
+
+      # Session/pane persistence across reboots.
+      resurrect
+      {
+        plugin = continuum;
+        extraConfig = "set -g @continuum-restore 'on'";
+      }
+
+      # prefix+F: fuzzy session/window/pane/clipboard/process switcher.
+      tmux-fzf
+
+      # prefix+]: fuzzy-pick word/line/path from pane scrollback, 'y' to copy.
+      {
+        plugin = extrakto;
+        extraConfig = ''
+          set -g @extrakto_key ']'
+          set -g @extrakto_copy_key 'y'
+        '';
+      }
+    ];
 
     extraConfig = ''
-      # start pane indexing at 1 for tmuxinator
-      set-window-option -g pane-base-index 1
-
       # renumber windows sequentially after closing any of them
       set -g renumber-windows on
 
-      # Set mouse on
-      set -gq mouse on
-
-      # Neovim says it needs this
-      set-option -g focus-events on
-
-      # Setup 'v' to begin selection
-      bind-key -T copy-mode-vi v send -X begin-selection
-      # Setup 'y' to copy selection
-      bind-key -T copy-mode-vi y send -X copy-selection-and-cancel
+      # 'v'/'y' in copy-mode-vi are native/yank-provided (system clipboard).
       # Setup 'P' to paste selection
       bind P paste-buffer
 
@@ -84,16 +99,8 @@ in
       bind % split-window -h -c "#{pane_current_path}"
       bind c new-window -c "#{pane_current_path}"
 
-      # vim-like pane switching
+      # vim-like last-window switching
       bind -r ^ last-window
-      bind -r k select-pane -U
-      bind -r j select-pane -D
-      bind -r h select-pane -L
-      bind -r l select-pane -R
-
-      # Bind C-s to fuzzy switch session
-      #bind -n C-s \
-        #split-window -l 10 'session=$(tmux list-sessions -F "#{session_name}" | fzf --query="$2" --select-1 --exit-0) && tmux switch-client -t "$session"' \;
 
       # Mousemode
       # Toggle mouse on
@@ -107,7 +114,7 @@ in
 
       # Reload tmux config
       bind-key R run-shell 'tmux source-file ${configFilePath} > /dev/null; \
-                            tmux display-message "Sourced ${configFilePath}!"'
+                            tmux display-message "Sourced ${configFilePath}"'
 
       # Open a "test" split-window at the bottom
       bind t split-window -f -l 15 -c "#{pane_current_path}"
