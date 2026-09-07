@@ -11,10 +11,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v2.3.1",
-      "revision": "5e35b5c40f7730455689411a7c0001a36727e66d",
-      "url": "https://api.github.com/repos/JuliusBrussee/caveman/tarball/refs/tags/v2.3.1",
-      "hash": "sha256-zQJ5fVaEuUjQoboJm9SvStwHI8kmqwyxecOSYvzuVBQ="
+      "version": "v2.6.0",
+      "revision": "09715751c1b30bb7142304086a6375d50d3c4cee",
+      "url": "https://api.github.com/repos/JuliusBrussee/caveman/tarball/refs/tags/v2.6.0",
+      "hash": "sha256-tEQDv0sIsCzdzaq/tdUSN8nb2xmQJkmjPtq8wKChqvQ="
     },
     "claude-plugin-karpathy-skills": {
       "type": "Git",
@@ -38,9 +38,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "5b15a47f2d7150f545fbcacbfe381787fc0230dc",
-      "url": "https://github.com/mattpocock/skills/archive/5b15a47f2d7150f545fbcacbfe381787fc0230dc.tar.gz",
-      "hash": "sha256-FPAAotNqA5aHrFDlj/XddoLs4TDKi+4J5H/mvevlOlk="
+      "revision": "3cca18b368ae95cdbdebbff572ccafa662551015",
+      "url": "https://github.com/mattpocock/skills/archive/3cca18b368ae95cdbdebbff572ccafa662551015.tar.gz",
+      "hash": "sha256-dF5i37jHnqfcXD1IRSVzSSm/pfCYSUmOsEhhs5Zx340="
     },
     "claude-plugins-official": {
       "type": "Git",
@@ -51,9 +51,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "340e33aef211d95769d252324854497af871dafe",
-      "url": "https://github.com/anthropics/claude-plugins-official/archive/340e33aef211d95769d252324854497af871dafe.tar.gz",
-      "hash": "sha256-ZsVsr20c6dWNmBJdBZBNjF4DOvDrMqyrUyJjBOH5DJk="
+      "revision": "85cce0381e7860082641b59d961a2b8c368b8b79",
+      "url": "https://github.com/anthropics/claude-plugins-official/archive/85cce0381e7860082641b59d961a2b8c368b8b79.tar.gz",
+      "hash": "sha256-gZxIOTXzNFxW+67iO5bveT4ZBKjP8HZfUlg1fAq4jE0="
     }
   },
   "version": 8
