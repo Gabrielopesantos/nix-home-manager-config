@@ -29,7 +29,7 @@ with lib;
 
       # Utilities
       watchexec
-      gcc
+      # gcc
 
       # Debugging
       ltrace
