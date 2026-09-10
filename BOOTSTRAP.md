@@ -15,6 +15,10 @@ Shared configuration lives in `home/`; each host file sets its identity, its
 `stateVersion`, and any host-only packages or feature flags (`gui.enable`,
 `personalApps.enable`, `devTools.enable`, `cloud.enable`).
 
+Every output also has a `<output>-headless` companion that forces `gui.enable`
+off, for machines reached over SSH. It is a separate output because module
+options cannot be overridden from the `home-manager` command line.
+
 ## 1. Install Nix (non-NixOS only)
 
 Determinate Systems installer - enables flakes by default:
@@ -51,7 +55,7 @@ Subsequent switches:
 ```sh
 make update                      # defaults to HOST=gabriel
 make update HOST=gsantos@lenovo
-make headless HOST=...           # no GUI packages
+make headless HOST=...           # switches .#$HOST-headless, no GUI packages
 ```
 
 If activation refuses to overwrite unmanaged files it found in `$HOME`, re-run

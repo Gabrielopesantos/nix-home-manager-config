@@ -46,26 +46,40 @@
       homeConfigurations =
         let
           mkHomeConfig =
-            { host, system }:
+            {
+              host,
+              system,
+              headless ? false,
+            }:
             home-manager.lib.homeManagerConfiguration {
               pkgs = pkgsFor system;
               modules = [
                 nix-index-database.homeModules.nix-index
                 ./home
                 ./hosts/${host}.nix
-              ];
+              ]
+              # mkForce because the host files set gui.enable themselves.
+              ++ lib.optional headless { gui.enable = lib.mkForce false; };
             };
+
+          hosts = {
+            "gabriel" = {
+              host = "casper";
+              system = "x86_64-linux";
+            };
+            "gsantos@lenovo" = {
+              host = "lenovo";
+              system = "x86_64-linux";
+            };
+          };
         in
-        {
-          "gabriel" = mkHomeConfig {
-            host = "casper";
-            system = "x86_64-linux";
-          };
-          "gsantos@lenovo" = mkHomeConfig {
-            host = "lenovo";
-            system = "x86_64-linux";
-          };
-        };
+        # Each host gets a "<name>-headless" companion output, which is what
+        # `make headless` builds. There is no way to override a module option
+        # from the home-manager command line, so it has to exist as an output.
+        lib.concatMapAttrs (name: args: {
+          ${name} = mkHomeConfig args;
+          "${name}-headless" = mkHomeConfig (args // { headless = true; });
+        }) hosts;
 
       devShells = forAllSystems (system: {
         default = (pkgsFor system).mkShell {
