@@ -7,7 +7,7 @@ update:
 
 .PHONY: headless
 headless:
-	home-manager switch --impure --flake .#gabriel-headless
+	home-manager switch --impure --flake .#$(HOST)-headless
 
 .PHONY: clean
 clean:
