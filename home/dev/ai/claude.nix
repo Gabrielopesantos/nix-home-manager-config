@@ -137,6 +137,7 @@ with lib;
         claude-plugin-local-skills = localSkills;
         claude-md-management = "${plugins.official}/plugins/claude-md-management";
         code-review = "${plugins.official}/plugins/code-review";
+        code-simplifier = "${plugins.official}/plugins/code-simplifier";
         commit-commands = "${plugins.official}/plugins/commit-commands";
         pr-review-toolkit = "${plugins.official}/plugins/pr-review-toolkit";
         skill-creator = "${plugins.official}/plugins/skill-creator";
