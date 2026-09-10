@@ -29,6 +29,7 @@ with lib;
     home.packages = with pkgs; [
       opencode
       code-cursor
+      pi-coding-agent
 
       # Usage tracking
       ccusage
