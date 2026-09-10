@@ -80,24 +80,27 @@ with lib;
 
       home.packages = with pkgs; [
         opencode
+        codex
+        pi-coding-agent
 
         # Usage tracking
         ccusage
       ];
 
-      programs.claude-code.enable = true;
-
-      # Loaded via --plugin-dir, not the marketplace/install registry, so Claude Code never
-      # needs to write to ~/.claude/plugins/*.json for these to work - no clobbering on switch.
-      # Attrset form (not a bare list) so directory names under ~/.claude/skills stay fixed
-      # instead of tracking each source's store-path hash, which changes on every pin bump.
-      programs.claude-code.plugins = {
-        claude-plugin-caveman = claudeCavemanPlugin;
-        claude-plugin-andrej-karpathy-skills = claudeKarpathyPlugin;
-        claude-plugin-mattpocock-skills = claudeMattPocockPlugin;
-        code-review = "${claudeOfficialPlugins}/plugins/code-review";
-        code-simplifier = "${claudeOfficialPlugins}/plugins/code-simplifier";
-        skill-creator = "${claudeOfficialPlugins}/plugins/skill-creator";
+      programs.claude-code = {
+        enable = true;
+        # Loaded via --plugin-dir, not the marketplace/install registry, so Claude Code never
+        # needs to write to ~/.claude/plugins/*.json for these to work - no clobbering on switch.
+        # Attrset form (not a bare list) so directory names under ~/.claude/skills stay fixed
+        # instead of tracking each source's store-path hash, which changes on every pin bump.
+        plugins = {
+          claude-plugin-caveman = claudeCavemanPlugin;
+          claude-plugin-andrej-karpathy-skills = claudeKarpathyPlugin;
+          claude-plugin-mattpocock-skills = claudeMattPocockPlugin;
+          code-review = "${claudeOfficialPlugins}/plugins/code-review";
+          code-simplifier = "${claudeOfficialPlugins}/plugins/code-simplifier";
+          skill-creator = "${claudeOfficialPlugins}/plugins/skill-creator";
+        };
       };
 
       # settings.json is installed as a plain writable file via home.activation
