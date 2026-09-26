@@ -35,6 +35,9 @@
       ".env"
       ".env.local"
 
+      # Private docs
+      "privatedocs/"
+
       # Claude
       "**/.claude/settings.local.json"
     ];
