@@ -51,9 +51,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "c447c3207a425bc4e2a0d068435f64b0477ae981",
-      "url": "https://github.com/anthropics/claude-plugins-official/archive/c447c3207a425bc4e2a0d068435f64b0477ae981.tar.gz",
-      "hash": "sha256-SkAl6Yh4vmcVE+9NJOQSbRtX6okSfZbX0Mz+JAjHTWk="
+      "revision": "fa59bc9037741ecfa131aa27938272605710d7b2",
+      "url": "https://github.com/anthropics/claude-plugins-official/archive/fa59bc9037741ecfa131aa27938272605710d7b2.tar.gz",
+      "hash": "sha256-3vqb/valY5deB8JT0ckbzTZ1Anqy9aqXvkKWWfg86yQ="
     }
   },
   "version": 8
