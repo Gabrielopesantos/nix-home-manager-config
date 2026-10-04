@@ -61,6 +61,9 @@
             host = "casper";
             system = "x86_64-linux";
           };
+          "gabriel-headless" = self.homeConfigurations.gabriel.extendModules {
+            modules = [ { gui.enable = lib.mkForce false; } ];
+          };
         };
 
       devShells = forAllSystems (system: {

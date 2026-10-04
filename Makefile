@@ -1,12 +1,11 @@
 .PHONY: update
 update:
-	home-manager switch --impure --flake .#gabriel
+	home-manager switch --flake .#gabriel
 
 .PHONY: headless
 headless:
-	home-manager switch --impure --flake .#gabriel --override-option gui.enable false
+	home-manager switch --flake .#gabriel-headless
 
 .PHONY: clean
 clean:
 	nix-collect-garbage -d
-

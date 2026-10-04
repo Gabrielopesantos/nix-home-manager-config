@@ -22,11 +22,15 @@ git clone <repo-url> ~/.config/home-manager
 
 ```sh
 cd ~/.config/home-manager
-nix run home-manager -- switch --impure --flake .#gabriel
+nix run home-manager -- switch --flake .#gabriel
 ```
 
 Subsequent switches: `make update`
-Headless machines (no GUI): `make headless`
+Headless machines (no GUI): `make headless`, which selects `.#gabriel-headless`.
+For the first headless switch, use `nix run home-manager -- switch --flake .#gabriel-headless`.
+
+If you use `NPINS_OVERRIDE_*` environment variables for local plugin sources,
+run `home-manager switch --impure --flake .#gabriel` explicitly.
 
 ## 4. Configure the fish prompt
 
