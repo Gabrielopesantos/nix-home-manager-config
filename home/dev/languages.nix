@@ -32,7 +32,7 @@ with lib;
       gcc
 
       # Debugging
-      ltrace
+      # ltrace
       valgrind
     ];
   };

@@ -7,9 +7,7 @@
     nix-direnv.enable = true;
   };
 
-  programs.eza = {
-    enable = true;
-  };
+  programs.eza.enable = true;
 
   # Installs the fzf binary (which fzf-fish depends on) and FZF_DEFAULT_OPTS,
   # but leaves key bindings to fzf-fish - otherwise both bind ctrl-r and the
@@ -27,6 +25,8 @@
     enable = true;
     enableFishIntegration = true;
     forceOverwriteSettings = true;
+    # Keep native Up-arrow history in all shells; Ctrl-R opens Atuin.
+    flags = [ "--disable-up-arrow" ];
     settings = {
       # Search UI opens as a floating tmux popup instead of drawing over the
       # pane (falls back to normal rendering outside tmux).
@@ -38,22 +38,15 @@
       # real keystrokes into panes on restore.
       history_filter = [ "^claude --resume" ];
     };
-    daemon.enable = false;
   };
 
   programs.htop.enable = true;
 
-  programs.lazygit = {
-    enable = true;
-  };
+  programs.lazygit.enable = true;
 
-  programs.nushell = {
-    enable = true;
-  };
+  programs.nushell.enable = true;
 
-  programs.zoxide = {
-    enable = true;
-  };
+  programs.zoxide.enable = true;
 
   programs.fish = {
     enable = true;
@@ -129,24 +122,6 @@
       # --directory on ctrl-t keeps the key that fzf's own file widget used
       # before its integration was disabled.
       fzf_configure_bindings --directory=ctrl-t --history=""
-
-      # Atuin's fish integration binds Up to the same interactive popup as
-      # ctrl-r (search/filter-mode config only changes what's pre-filtered
-      # inside it, doesn't skip it). Rebind Up back to fish's plain
-      # walk-backward history so ctrl-r stays the only key that opens the
-      # popup. Runs on fish_prompt (not here directly) since atuin's own
-      # binding is sourced after interactiveShellInit and would win a
-      # same-pass rebind here.
-      function _restore_native_up_arrow --on-event fish_prompt
-          bind up up-or-search
-          bind \eOA up-or-search
-          bind \e\[A up-or-search
-          if bind -M insert >/dev/null 2>&1
-              bind -M insert up up-or-search
-              bind -M insert \eOA up-or-search
-              bind -M insert \e\[A up-or-search
-          end
-      end
     '';
   };
 }
