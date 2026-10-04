@@ -30,9 +30,11 @@ with lib;
       wireshark
       icon-library
       signal-desktop
+      telegram-desktop
       nextcloud-client
       bitwarden-desktop
       kooha
+      grok-bot
     ];
 
     services.tailscale-systray = {

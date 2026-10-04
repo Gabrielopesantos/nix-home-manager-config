@@ -8,6 +8,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     herdr.url = "github:herdrdev/herdr";
+    grok-bot.url = "github:jordangarrison/grok-bot-flake";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,6 +21,7 @@
       nixpkgs,
       home-manager,
       herdr,
+      grok-bot,
       nix-index-database,
     }:
     let
@@ -39,6 +41,7 @@
           ];
           overlays = [
             herdr.overlays.default
+            grok-bot.overlays.default
           ];
         };
     in
