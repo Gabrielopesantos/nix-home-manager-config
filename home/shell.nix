@@ -34,9 +34,6 @@
       # Adds "workspace" (current git repo tree) to the ctrl-r filter modes
       # you can cycle through. Default search scope stays global.
       workspaces = true;
-      # herdr's resume_agents_on_restore feature injects this command as
-      # real keystrokes into panes on restore.
-      history_filter = [ "^claude --resume" ];
     };
   };
 

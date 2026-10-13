@@ -4,7 +4,7 @@ with lib;
   imports = [
     ./languages.nix
     ./editors.nix
-    ./ai.nix
+    ./ai
   ];
 
   options.devTools.enable = mkEnableOption "developer tools and applications" // {

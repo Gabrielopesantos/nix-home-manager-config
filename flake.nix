@@ -7,7 +7,6 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    herdr.url = "github:herdrdev/herdr";
     grok-bot.url = "github:jordangarrison/grok-bot-flake";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -20,7 +19,6 @@
       self,
       nixpkgs,
       home-manager,
-      herdr,
       grok-bot,
       nix-index-database,
     }:
@@ -40,7 +38,6 @@
             "electron-39.8.10" # For bitwarden-desktop
           ];
           overlays = [
-            herdr.overlays.default
             grok-bot.overlays.default
           ];
         };
