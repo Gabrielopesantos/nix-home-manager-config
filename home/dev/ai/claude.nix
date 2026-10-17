@@ -88,6 +88,10 @@ with lib;
             ".pyi" = "python";
           };
         };
+        gopls = {
+          command = "gopls";
+          extensionToLanguage.".go" = "go";
+        };
         typescript = {
           command = "typescript-language-server";
           args = [ "--stdio" ];
@@ -107,6 +111,7 @@ with lib;
       home.packages = with pkgs; [
         rust-analyzer
         pyright
+        gopls
         typescript-language-server
       ];
 
