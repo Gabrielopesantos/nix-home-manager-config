@@ -30,6 +30,7 @@ with lib;
         sqlitebrowser
         wireshark
         kooha
+        grok-bot
       ])
       ++ optionals config.personalApps.enable (
         with pkgs;
@@ -43,7 +44,6 @@ with lib;
           telegram-desktop
           nextcloud-client
           bitwarden-desktop
-          grok-bot
         ]
       );
 
