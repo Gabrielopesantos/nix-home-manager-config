@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     grok-bot.url = "github:jordangarrison/grok-bot-flake";
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -19,6 +23,7 @@
       self,
       nixpkgs,
       home-manager,
+      stylix,
       grok-bot,
       nix-index-database,
     }:
@@ -51,6 +56,7 @@
               pkgs = pkgsFor system;
               modules = [
                 nix-index-database.homeModules.nix-index
+                stylix.homeModules.stylix
                 ./home
                 ./hosts/${host}.nix
               ];

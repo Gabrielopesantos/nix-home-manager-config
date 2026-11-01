@@ -44,10 +44,6 @@ with lib;
     programs.ghostty = {
       enable = true;
       settings = {
-        font-family = "Noto Sans Mono";
-        font-size = 12;
-
-        background-opacity = 0.95;
         background-blur-radius = 20;
 
         mouse-hide-while-typing = true;

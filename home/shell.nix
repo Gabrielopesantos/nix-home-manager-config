@@ -42,6 +42,7 @@
   programs.lazygit.enable = true;
 
   programs.nushell.enable = true;
+  programs.nushell.loadSessionVariables = true;
 
   programs.zoxide.enable = true;
 

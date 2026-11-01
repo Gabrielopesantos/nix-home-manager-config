@@ -10,6 +10,7 @@
     ./security.nix
     ./git.nix
     ./terminal.nix
+    ./theme.nix
     ./gui.nix
   ];
 }
