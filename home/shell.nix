@@ -1,4 +1,16 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
+let
+  # Starship's Nerd Font preset (glyphs instead of emoji), minus the parts set below.
+  nerdFontSymbols = removeAttrs (builtins.fromTOML (
+      builtins.readFile (
+        pkgs.runCommand "starship-nerd-font.toml" { } "${pkgs.starship}/bin/starship preset nerd-font-symbols > $out"
+      )
+    )) [
+    "$schema"
+    "character"
+    "git_status"
+  ];
+in
 {
   programs.bottom.enable = true;
 
@@ -46,6 +58,80 @@
 
   programs.zoxide.enable = true;
 
+  # Same info as the old tide prompt. Left: path, git. Right: exit status, slow-command time, ssh/root user@host,
+  # background jobs, direnv, nix shell, containers, cloud/k8s contexts and
+  # language versions. Language modules only show inside a matching project.
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+    # Old prompts shrink to a bare `$` in the scrollback.
+    enableTransience = true;
+    settings = lib.recursiveUpdate nerdFontSymbols {
+      add_newline = false;
+      # The right-hand modules sit on the first line, pushed right by $fill.
+      # fish puts `right_format` on the input line, so it is not used.
+      format =
+        "$directory$git_branch$git_commit$git_state$git_status$fill"
+        + builtins.concatStringsSep "" (map (m: "$" + m) [
+        "status"
+        "cmd_duration"
+        "username"
+        "hostname"
+        "jobs"
+        "direnv"
+        "bun"
+        "nodejs"
+        "python"
+        "rust"
+        "java"
+        "php"
+        "pulumi"
+        "golang"
+        "gcloud"
+        "kubernetes"
+        "container"
+        "terraform"
+        "aws"
+        "nix_shell"
+        "elixir"
+        "zig"
+        "time"
+      ])
+        + "$line_break$character";
+      fill.symbol = " ";
+
+      # Parents shrink to one char (/h/g/w/project); the last dir stays whole.
+      directory = {
+        fish_style_pwd_dir_length = 1;
+        truncation_length = 1;
+        truncate_to_repo = false;
+      };
+      git_branch.format = "[$branch]($style) ";
+      cmd_duration = {
+        min_time = 3000;
+        format = "[$duration]($style) ";
+      };
+      status.disabled = false;
+      # Off by default in starship; tide showed all of these.
+      direnv = {
+        disabled = false;
+        symbol = "direnv ";
+        format = "[$symbol$loaded]($style) ";
+      };
+      nix_shell.format = "[$symbol$state]($style) ";
+      # Only show the k8s context in directories that look like k8s projects.
+      kubernetes = {
+        disabled = false;
+        detect_files = [ "kustomization.yaml" "Chart.yaml" "skaffold.yaml" ];
+        detect_folders = [ "k8s" "kubernetes" "manifests" ];
+      };
+      time = {
+        disabled = false;
+        time_format = "%T";
+      };
+    };
+  };
+
   programs.fish = {
     enable = true;
 
@@ -73,12 +159,6 @@
       {
         name = "plugin-sudope";
         src = pkgs.fishPlugins.plugin-sudope.src;
-      }
-      {
-        # Prompt. Configured by the interactive `tide configure` wizard, which
-        # writes fish universal variables.
-        name = "tide";
-        src = pkgs.fishPlugins.tide.src;
       }
       {
         name = "fish-completion-sync";
