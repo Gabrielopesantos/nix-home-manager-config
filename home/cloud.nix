@@ -13,10 +13,12 @@ with lib;
   config = mkIf config.cloud.enable {
     home.packages = with pkgs; [
       awscli2
-      k9s
       kubectl
       kubectx
       stern
     ];
+
+    # Module (not just the package) so Stylix can write the k9s skin.
+    programs.k9s.enable = true;
   };
 }

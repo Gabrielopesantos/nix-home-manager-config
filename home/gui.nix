@@ -17,8 +17,6 @@ with lib;
       wl-clipboard
 
       brave
-      zathura
-      xournalpp
       gromit-mpx
       protonmail-desktop
       proton-vpn
@@ -28,7 +26,6 @@ with lib;
       yubioath-flutter
       sqlitebrowser
       wireshark
-      icon-library
       signal-desktop
       telegram-desktop
       nextcloud-client
@@ -36,6 +33,9 @@ with lib;
       kooha
       grok-bot
     ];
+
+    # Module (not just the package) so Stylix can write the zathura colors.
+    programs.zathura.enable = true;
 
     services.tailscale-systray = {
       enable = true;

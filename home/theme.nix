@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   stylix = {
     enable = true;
@@ -6,8 +6,8 @@
     base16Scheme = "${pkgs.base16-schemes}/share/themes/tomorrow-night.yaml";
 
     fonts.monospace = {
-      package = pkgs.nerd-fonts.iosevka;
-      name = "Iosevka Nerd Font";
+      package = pkgs.nerd-fonts.noto;
+      name = "Noto Sans Mono";
     };
     fonts.sizes.terminal = 13;
     opacity.terminal = 0.95;
@@ -22,5 +22,11 @@
     # KDE and GTK are managed by NixOS, not by this home-manager config.
     targets.gtk.enable = false;
     targets.kde.enable = false;
+  };
+
+  # ~/.local/state/nix/profiles/home-manager/specialisation/light/activate
+  specialisation.light.configuration.stylix = {
+    polarity = lib.mkForce "light";
+    base16Scheme = lib.mkForce "${pkgs.base16-schemes}/share/themes/tomorrow.yaml";
   };
 }

@@ -76,7 +76,7 @@
       navigate = true;
       side-by-side = true;
       line-numbers = true;
-      syntax-theme = "base16-256";
+      syntax-theme = "base16-stylix";
     };
   };
 }
