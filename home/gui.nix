@@ -58,7 +58,6 @@ with lib;
       enable = true;
       settings = {
         background-blur-radius = 20;
-        cursor-style = "block";
 
         mouse-hide-while-typing = true;
         command = "${pkgs.fish}/bin/fish --login";
