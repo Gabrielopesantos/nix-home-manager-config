@@ -11,10 +11,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v4.0.1",
-      "revision": "d0be14f2dc92a99d12e717465d6908723ab9bfdb",
-      "url": "https://api.github.com/repos/JuliusBrussee/caveman/tarball/refs/tags/v4.0.1",
-      "hash": "sha256-2xZHdWkWJrPAJ8++qW0Xmb3eORZ41e+GsZjIphqTtlI="
+      "version": "v4.1.0",
+      "revision": "5831edc2f57b6c4a274dcc9e2e433988d97eb23d",
+      "url": "https://api.github.com/repos/JuliusBrussee/caveman/tarball/refs/tags/v4.1.0",
+      "hash": "sha256-0QC776k5eDk2ME38O5k6R/NgX24/1Ikp10y2C2GrMMU="
     },
     "claude-plugin-karpathy-skills": {
       "type": "Git",
@@ -51,9 +51,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "a7ba5b93db0c7c8d17f3f1d25853adca79598a1a",
-      "url": "https://github.com/anthropics/claude-plugins-official/archive/a7ba5b93db0c7c8d17f3f1d25853adca79598a1a.tar.gz",
-      "hash": "sha256-C8uTRCtKEvL7dz+dDbfs/DwU/uxH5YzYFDn0oo3BKnA="
+      "revision": "0412be76f50ab4f4f8abff3753efa9269fbbca5b",
+      "url": "https://github.com/anthropics/claude-plugins-official/archive/0412be76f50ab4f4f8abff3753efa9269fbbca5b.tar.gz",
+      "hash": "sha256-mKi7wkI60esAVbrxGQu+CRNE3Sc7ypwrnv9s+Ps+I9o="
     }
   },
   "version": 8
