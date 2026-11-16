@@ -38,9 +38,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
-      "url": "https://github.com/mattpocock/skills/archive/4ae2317ddb22b046e26455e4f9c9b3aaaf62212d.tar.gz",
-      "hash": "sha256-3vhd77xfZjKUYJsIwPFevIZPUAzUgZXr0RYj5NQrBwk="
+      "revision": "5863806dd4e15c63174bee4e7515a4256792ecfa",
+      "url": "https://github.com/mattpocock/skills/archive/5863806dd4e15c63174bee4e7515a4256792ecfa.tar.gz",
+      "hash": "sha256-AYSRCvBL8TDDdW3rgKu2T7gl4YYDoDId0jYbabEFyfs="
     },
     "claude-plugins-official": {
       "type": "Git",
@@ -51,9 +51,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "0412be76f50ab4f4f8abff3753efa9269fbbca5b",
-      "url": "https://github.com/anthropics/claude-plugins-official/archive/0412be76f50ab4f4f8abff3753efa9269fbbca5b.tar.gz",
-      "hash": "sha256-mKi7wkI60esAVbrxGQu+CRNE3Sc7ypwrnv9s+Ps+I9o="
+      "revision": "b5b01ac4f889fec0c4c6bb89f27ca7c8574473f6",
+      "url": "https://github.com/anthropics/claude-plugins-official/archive/b5b01ac4f889fec0c4c6bb89f27ca7c8574473f6.tar.gz",
+      "hash": "sha256-2rggi6MyrjwIRhM/TCOoDvqlGs4l5V0beE11537mO1Y="
     }
   },
   "version": 8
