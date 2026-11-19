@@ -10,7 +10,6 @@
       name = "Noto Sans Mono";
     };
     fonts.sizes.terminal = 13;
-    opacity.terminal = 0.95;
 
     # Stylix's rofi module still sets the renamed `programs.rofi.font`,
     # which prints an eval warning. rofi is not used here.
